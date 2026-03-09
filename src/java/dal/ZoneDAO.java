@@ -4,10 +4,11 @@
  */
 package dal;
 
+import models.Zone;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,4 +19,23 @@ public class ZoneDAO extends DBContext {
 
     PreparedStatement stm;
     ResultSet rs;
+
+    public List<Zone> getAllZones() {
+        List<Zone> zones = new ArrayList<>();
+        String sql = "SELECT * FROM Zones";
+        try {
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Zone z = new Zone(
+                        rs.getInt("ZoneID"),
+                        rs.getString("ZoneName"),
+                        rs.getString("Description"));
+                zones.add(z);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getAllZones: " + e.getMessage());
+        }
+        return zones;
+    }
 }

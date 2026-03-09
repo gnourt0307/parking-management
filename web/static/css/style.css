@@ -309,7 +309,6 @@ h4 {
   overflow: hidden;
   box-shadow: var(--box-shadow);
   background: #fff;
-  table-layout: fixed;
   border: 1px solid #ddd;
 }
 
