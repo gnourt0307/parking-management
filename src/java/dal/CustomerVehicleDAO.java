@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public class CustomerVehicle extends DBContext {
+public class CustomerVehicleDAO extends DBContext {
     
     PreparedStatement stm;
     ResultSet rs;

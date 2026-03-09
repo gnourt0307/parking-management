@@ -15,12 +15,19 @@ public class Pricing {
     private int typeID;
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
+    private VehicleType vehicleType;
 
     public Pricing() {
     }
 
     public Pricing(int pricingID, int typeID, BigDecimal hourlyRate, BigDecimal dailyRate) {
         this.pricingID = pricingID;
+        this.typeID = typeID;
+        this.hourlyRate = hourlyRate;
+        this.dailyRate = dailyRate;
+    }
+    
+    public Pricing(int typeID, BigDecimal hourlyRate, BigDecimal dailyRate) {
         this.typeID = typeID;
         this.hourlyRate = hourlyRate;
         this.dailyRate = dailyRate;
@@ -57,4 +64,14 @@ public class Pricing {
     public void setDailyRate(BigDecimal dailyRate) {
         this.dailyRate = dailyRate;
     }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+    
+    
 }
