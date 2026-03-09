@@ -22,23 +22,23 @@
         <div class="dashboard-cards">
           <div class="card">
             <h3>Total Capacity</h3>
-            <div class="value">500</div>
+            <div class="value">500</div> <!<!-- Fix for auto -->
           </div>
           <div class="card">
             <h3>Vehicles Parked</h3>
-            <div class="value">325</div>
+            <div class="value">325</div> <!<!-- Fix for auto -->
           </div>
           <div class="card">
             <h3>Available Slots</h3>
-            <div class="value text-success">175</div>
+            <div class="value text-success">175</div> <!<!-- Fix for auto -->
           </div>
           <div class="card">
             <h3>Today's Revenue</h3>
-            <div class="value">$1,250</div>
+            <div class="value">$1,250</div> <!<!-- Fix for auto -->
           </div>
         </div>
 
-        <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</h3>
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</h3> <!<!-- Fix for auto -->
         <table class="data-table">
           <thead>
             <tr>
