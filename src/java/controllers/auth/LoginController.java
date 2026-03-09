@@ -104,7 +104,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/Dashboard");
             } else if (user.getRoleID() == 2) {
                 response.sendRedirect(request.getContextPath() + "/VehicleIn");
-            } else if (user.getRoleID() == 3) {
+            } else if (user.getRoleID() == 3 || user.getRoleID() == 2 || user.getRoleID() == 1) {
                 response.sendRedirect(request.getContextPath() + "/Profile");
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
