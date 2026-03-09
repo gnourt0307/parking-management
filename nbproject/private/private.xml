@@ -3,14 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/errors/403.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/admin/PricingController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/auth/LogoutController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/includes/sidebar_admin.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/auth/RegisterController.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/static/css/style.css</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/admin/zone_list.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/customer/history.jsp</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/auth/LoginController.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/models/Zone.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/includes/sidebar_customer.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/admin/ReportController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/includes/navbar_mainpage.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/customer/ProfileController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/errors/403.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/staff/VehicleInController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/static/js/admin_edit.js</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/staff/VehicleOutController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/admin/DashboardController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/admin/ZonesController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/admin/user_list.jsp</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/admin/dashboard.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/admin/UsersController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/customer/history.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/admin/SlotsController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/includes/sidebar_staff.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/src/java/controllers/customer/HistoryController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/ParkingManagement/web/views/admin/zone_list.jsp</file>
         </group>
     </open-files>
 </project-private>
