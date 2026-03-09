@@ -131,8 +131,24 @@ public class SlotDAO extends DBContext {
     }
 
     public boolean deleteSlot(int slotID) {
-        String sql = "DELETE FROM Slots WHERE SlotID = ? AND UPPER(Status) != 'OCCUPIED'";
+        // 1. Check if the slot is currently OCCUPIED or has an ACTIVE ticket
+        String checkSql = "SELECT 1 FROM Tickets WHERE SlotID = ? AND UPPER(Status) = 'ACTIVE'";
         try {
+            PreparedStatement checkStm = connection.prepareStatement(checkSql);
+            checkStm.setInt(1, slotID);
+            ResultSet checkRs = checkStm.executeQuery();
+            if (checkRs.next()) {
+                return false; // Cannot delete, car is currently parked
+            }
+
+            // 2. Delete ALL historical tickets associated with this slot
+            String deleteTicketsSql = "DELETE FROM Tickets WHERE SlotID = ?";
+            PreparedStatement delTicketsStm = connection.prepareStatement(deleteTicketsSql);
+            delTicketsStm.setInt(1, slotID);
+            delTicketsStm.executeUpdate();
+
+            // 3. Proceed to delete the Slot
+            String sql = "DELETE FROM Slots WHERE SlotID = ?";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, slotID);
             return stm.executeUpdate() > 0;

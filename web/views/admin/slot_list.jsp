@@ -138,8 +138,8 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th style="width: 15%;">Slot Name</th>
                   <th style="width: 15%;">Zone</th>
+                  <th style="width: 15%;">Slot Name</th>
                   <th style="width: 20%;">Vehicle Type</th>
                   <th style="width: 20%;">Status</th>
                   <th style="width: 30%; text-align: left;">Actions</th>
@@ -155,8 +155,8 @@
                   <c:otherwise>
                     <c:forEach items="${slots}" var="slot">
                       <tr>
-                        <td>${slot.slotName}</td>
                         <td>${slot.zone.zoneName}</td>
+                        <td>${slot.slotName}</td>
                         <td>
                           <c:forEach items="${types}" var="t">
                             <c:if test="${t.typeID == slot.typeID}">${t.typeName}</c:if>
@@ -221,16 +221,16 @@
           <form action="Slots" method="POST">
             <input type="hidden" name="action" value="add">
             <div class="form-group">
-              <label>Slot Name</label>
-              <input type="text" name="slotName" required>
-            </div>
-            <div class="form-group">
               <label>Zone</label>
               <select name="zoneID" required>
                 <c:forEach items="${zones}" var="z">
                   <option value="${z.zoneID}">${z.zoneName}</option>
                 </c:forEach>
               </select>
+            </div>
+            <div class="form-group">
+              <label>Slot Name</label>
+              <input type="text" name="slotName" required>
             </div>
             <div class="form-group">
               <label>Vehicle Type</label>
@@ -261,16 +261,16 @@
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="slotID" id="editSlotID">
             <div class="form-group">
-              <label>Slot Name</label>
-              <input type="text" name="slotName" id="editSlotName" required>
-            </div>
-            <div class="form-group">
               <label>Zone</label>
               <select name="zoneID" id="editZoneID" required>
                 <c:forEach items="${zones}" var="z">
                   <option value="${z.zoneID}">${z.zoneName}</option>
                 </c:forEach>
               </select>
+            </div>
+            <div class="form-group">
+              <label>Slot Name</label>
+              <input type="text" name="slotName" id="editSlotName" required>
             </div>
             <div class="form-group">
               <label>Vehicle Type</label>
