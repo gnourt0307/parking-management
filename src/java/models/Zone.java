@@ -12,6 +12,10 @@ public class Zone {
     private int zoneID;
     private String zoneName;
     private String description;
+    private int capacity;
+    private String vehicleTypes;
+    private int typeID;
+    private String typeName;
 
     public Zone() {
     }
@@ -44,5 +48,37 @@ public class Zone {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getVehicleTypes() {
+        return typeName != null ? typeName : vehicleTypes;
+    }
+
+    public void setVehicleTypes(String vehicleTypes) {
+        this.vehicleTypes = vehicleTypes;
+    }
+
+    public int getTypeID() {
+        return typeID;
+    }
+
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }
