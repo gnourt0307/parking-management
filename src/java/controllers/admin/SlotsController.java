@@ -30,18 +30,7 @@ import java.util.Map;
  */
 public class SlotsController extends HttpServlet {
 
-    private SlotDAO slotDAO;
-    private ZoneDAO zoneDAO;
-    private VehicleTypeDAO typeDAO;
-    private dal.TicketDAO ticketDAO;
 
-    @Override
-    public void init() throws ServletException {
-        slotDAO = new SlotDAO();
-        zoneDAO = new ZoneDAO();
-        typeDAO = new VehicleTypeDAO();
-        ticketDAO = new dal.TicketDAO();
-    }
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -67,6 +56,12 @@ public class SlotsController extends HttpServlet {
                 return;
             }
         }
+
+        // Initialize DAOs
+        SlotDAO slotDAO = new SlotDAO();
+        ZoneDAO zoneDAO = new ZoneDAO();
+        VehicleTypeDAO typeDAO = new VehicleTypeDAO();
+        dal.TicketDAO ticketDAO = new dal.TicketDAO();
 
         // Handle search and filter parameters
         String searchKeyword = request.getParameter("search");
@@ -105,6 +100,9 @@ public class SlotsController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
+
+        // Initialize DAO
+        SlotDAO slotDAO = new SlotDAO();
 
         String action = request.getParameter("action");
         if (action == null) {

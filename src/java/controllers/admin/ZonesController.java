@@ -21,14 +21,7 @@ import models.Zone;
 
 public class ZonesController extends HttpServlet {
 
-    private ZoneDAO zoneDAO;
-    private VehicleTypeDAO typeDAO;
 
-    @Override
-    public void init() throws ServletException {
-        zoneDAO = new ZoneDAO();
-        typeDAO = new VehicleTypeDAO();
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,6 +40,10 @@ public class ZonesController extends HttpServlet {
                 return;
             }
         }
+
+        // Initialize DAOs
+        ZoneDAO zoneDAO = new ZoneDAO();
+        VehicleTypeDAO typeDAO = new VehicleTypeDAO();
 
         String zoneFilter = request.getParameter("zoneFilter");
         String vehicleTypeSearch = request.getParameter("search");
@@ -75,6 +72,10 @@ public class ZonesController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
+
+        // Initialize DAOs
+        ZoneDAO zoneDAO = new ZoneDAO();
+        VehicleTypeDAO typeDAO = new VehicleTypeDAO();
 
         String action = request.getParameter("action");
         if (action == null) {
