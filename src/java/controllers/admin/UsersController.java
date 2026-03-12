@@ -88,7 +88,7 @@ public class UsersController extends HttpServlet {
             // Nếu không nhập gì thì lấy toàn bộ
             users = uDAO.getListUsers();
         }
-        
+
         RoleDAO rDAO = new RoleDAO();
         List<Role> roles = rDAO.getAllRoles();
 
@@ -138,8 +138,8 @@ public class UsersController extends HttpServlet {
                 if (phone == null) {
                     phone = "";
                 }
-                
-                int roleID = Integer.parseInt(request.getParameter("role")); 
+
+                int roleID = Integer.parseInt(request.getParameter("role"));
                 String status = request.getParameter("status");
 
                 // 2. Đóng gói vào object User
@@ -154,8 +154,6 @@ public class UsersController extends HttpServlet {
                 // 3. Gọi hàm insertUser có sẵn
                 UserDAO uDAO = new UserDAO();
                 boolean success = uDAO.insertUser(newUser);
-                
-                
 
                 // 4. Báo kết quả
                 if (success) {
@@ -166,22 +164,35 @@ public class UsersController extends HttpServlet {
                 response.sendRedirect("Users");
                 return;
             } else if (action.equals("edit")) {
-//                int slotID = Integer.parseInt(request.getParameter("slotID"));
-//                int zoneID = Integer.parseInt(request.getParameter("zoneID"));
-//                String slotName = request.getParameter("slotName");
-//                int typeID = Integer.parseInt(request.getParameter("typeID"));
-//                String status = request.getParameter("status");
-//
-//                if (slotDAO.checkSlotExistForUpdate(zoneID, slotName, slotID)) {
-//                    session.setAttribute("errorMsg", "Slot '" + slotName + "' already exists in this Zone.");
-//                } else {
-//                    boolean success = slotDAO.updateSlot(slotID, zoneID, slotName, typeID, status);
-//                    if (success) {
-//                        session.setAttribute("successMsg", "Slot updated successfully.");
-//                    } else {
-//                        session.setAttribute("errorMsg", "Failed to update slot.");
-//                    }
-//                }
+                // 1. Lấy dữ liệu từ form Edit JSP gửi lên
+                int userID = Integer.parseInt(request.getParameter("userID"));
+                String fullName = request.getParameter("fullName");
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                int roleID = Integer.parseInt(request.getParameter("role"));
+                String status = request.getParameter("status");
+
+                // 2. Đóng gói vào object User
+                User updateUser = new User();
+                updateUser.setUserID(userID);
+                updateUser.setFullName(fullName);
+                updateUser.setUsername(username);
+                updateUser.setPassword(password);
+                updateUser.setRoleID(roleID);
+                updateUser.setStatus(status);
+
+                // 3. Gọi hàm DAO để update xuống DB
+                UserDAO uDAO = new UserDAO();
+                boolean success = uDAO.updateUser(updateUser);
+
+                // 4. Báo kết quả và điều hướng
+                if (success) {
+                    session.setAttribute("successMsg", "Cập nhật User thành công!");
+                } else {
+                    session.setAttribute("errorMsg", "Cập nhật thất bại. Vui lòng thử lại!");
+                }
+                response.sendRedirect("Users");
+                return; // Thêm return để kết thúc nhánh này
             } else if (action.equals("delete")) {
 //                int slotID = Integer.parseInt(request.getParameter("slotID"));
 //                boolean success = slotDAO.deleteSlot(slotID);

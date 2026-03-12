@@ -31,7 +31,13 @@ function openEditModal(...args) {
         const [typeName] = args;
         document.getElementById('vehicleType').value = typeName;
     } else if (document.getElementById('editUser')) {
-        
+        const [id, fullName, username, password, roleID, status] = args;
+        document.getElementById('editUser').value=id;
+        document.getElementById('fullName').value=fullName;
+        document.getElementById('username').value=username;
+        document.getElementById('password').value=password;
+        document.getElementById('role').value=roleID;
+        document.getElementById('status').value=status;
     }
 
     const editModal = document.getElementById('editModal');

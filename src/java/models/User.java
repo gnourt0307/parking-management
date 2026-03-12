@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author Admin
  */
 public class User {
-    private int userID;
+    public int userID;
     private String username;
     private String password;
     private String fullName;

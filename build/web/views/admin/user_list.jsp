@@ -69,7 +69,7 @@
                                             <td>${user.role.roleName}</td>
                                             <td>${user.status}</td>
                                             <td>
-                                                <button class="btn btn-sm" onclick="openEditModal()"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                <button class="btn btn-sm" onclick="openEditModal('${user.userID}','${user.fullName}','${user.username}','${user.password}','${user.role.roleID}','${user.status}')"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
                                             </td>
                                         </tr>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="form-group">
                         <label>User Name</label>
-                        <input type="text" name="userName" required>
+                        <input type="text" name="username" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
@@ -123,21 +123,21 @@
             </div>
         </div>  
 
-        <!-- Edit Pricing Modal -->
+        <!-- Edit User Modal -->
         <div id="editModal" class="modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
                 <h3>Edit User</h3>
                 <form action="Users" method="POST">
                     <input type="hidden" name="action" value="edit">
-                    <input type="hidden" name="user" id="editUser">
+                    <input type="hidden" name="userID" id="editUser">
                     <div class="form-group">
                         <label>Full name</label>
                         <input type="text" name="fullName" id="fullName" required>
                     </div>
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="userName" id="userName" required>
+                        <input type="text" name="username" id="username" required>
                     </div>
 
                     <div class="form-group">
@@ -146,7 +146,7 @@
                     </div>
                     <div class="form-group">
                         <label>Role</label>
-                        <select name="role">
+                        <select name="role" id="role" required>
                             <c:forEach items="${roles}" var="r">
                                 <option value="${r.roleID}">${r.roleName}</option>
                             </c:forEach>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <select name="status" required>
+                        <select name="status" id="status" required>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </select>
