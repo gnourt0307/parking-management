@@ -4,6 +4,9 @@
  */
 package controllers.admin;
 
+import dal.DashboardDAO;
+import dal.SlotDAO;
+import dal.ZoneDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import models.ActivityLog;
 import models.User;
 
 /**
@@ -70,6 +75,16 @@ public class DashboardController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
+        SlotDAO sDAO = new SlotDAO();
+        int totalCapacity = sDAO.getTotalCapacity();
+        request.setAttribute("totalCapacity", totalCapacity);
+        int vehiclesParked = sDAO.getOccupiedSlotsCount();
+        request.setAttribute("vehiclesParked", vehiclesParked);
+        int availableSlots = sDAO.getAvailableSlotsCount();
+        request.setAttribute("availableSlots", availableSlots);
+        DashboardDAO dDAO = new DashboardDAO();
+        List<ActivityLog> recentActivities = dDAO.getRecentActivities();
+        request.setAttribute("recentActivities", recentActivities);
         rd = request.getRequestDispatcher("views/admin/dashboard.jsp");
         rd.forward(request, response);
     }
