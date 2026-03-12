@@ -85,7 +85,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <jsp:include page="../includes/footer.jsp" />
             </main>
         </div>
