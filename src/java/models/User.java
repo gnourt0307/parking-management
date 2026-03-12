@@ -19,11 +19,12 @@ public class User {
     private int roleID;
     private String status;
     private LocalDateTime createdAt;
+    private Role role;
 
     public User() {
     }
 
-    public User(int userID, String username, String password, String fullName, String phone, int roleID, String status, LocalDateTime createdAt) {
+    public User(int userID, String username, String password, String fullName, String phone, int roleID, String status, LocalDateTime createdAt, Role role) {
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -32,7 +33,10 @@ public class User {
         this.roleID = roleID;
         this.status = status;
         this.createdAt = createdAt;
+        this.role = role;
     }
+
+    
 
     public int getUserID() {
         return userID;
@@ -97,6 +101,12 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    
-    
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
