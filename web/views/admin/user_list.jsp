@@ -69,7 +69,7 @@
                                             <td>${user.role.roleName}</td>
                                             <td>${user.status}</td>
                                             <td>
-                                                <button class="btn btn-sm"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                <button class="btn btn-sm" onclick="openEditModal()"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
                                             </td>
                                         </tr>
@@ -122,6 +122,40 @@
                 </form>
             </div>
         </div>  
+
+        <!-- Edit Pricing Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
+                <h3>Edit User</h3>
+                <form action="Users" method="POST">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="user" id="editUser">
+                    <div class="form-group">
+                        <label>Full name</label>
+                        <input type="number" name="fullName" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="number" name="hourlyRate" id="hourlyRate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="number" name="dailyRate" id="dailyRate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="number" name="dailyRate" id="dailyRate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <input type="number" name="dailyRate" id="dailyRate" required>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">Update User</button>
+                </form>
+            </div>
+        </div>
         <script src="static/js/admin_edit.js"></script>
     </body>
 

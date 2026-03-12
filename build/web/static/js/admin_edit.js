@@ -30,6 +30,8 @@ function openEditModal(...args) {
     } else if (document.getElementById('editPricing')) {
         const [typeName] = args;
         document.getElementById('vehicleType').value = typeName;
+    } else if (document.getElementById('editUser')) {
+        
     }
 
     const editModal = document.getElementById('editModal');
