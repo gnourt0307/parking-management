@@ -167,6 +167,20 @@ public class UserDAO extends DBContext {
 
         return false;
     }
+    
+    public boolean deleteUser(User user) {
+        try {
+            String strSQL = """
+                            Delete FROM Users WHERE Users.UserID = ?
+                            """;
+            stm = connection.prepareStatement(strSQL);
+            stm.setInt(1, user.getUserID());
+            return stm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean registerUser(User user) {
         try {

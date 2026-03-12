@@ -69,8 +69,14 @@
                                             <td>${user.role.roleName}</td>
                                             <td>${user.status}</td>
                                             <td>
-                                                <button class="btn btn-sm" onclick="openEditModal('${user.userID}','${user.fullName}','${user.username}','${user.password}','${user.role.roleID}','${user.status}')"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                                                <button class="btn btn-sm" onclick="openEditModal('${user.userID}', '${user.fullName}', '${user.username}', '${user.password}', '${user.role.roleID}', '${user.status}')"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                <form action="Users" method="POST" style="display:inline;"
+                                                      onsubmit="return confirm('Delete this user?');">
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <input type="hidden" name="userID" value="${user.userID}">
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i>
+                                                        Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -163,6 +169,8 @@
                 </form>
             </div>
         </div>
+
+
         <script src="static/js/admin_edit.js"></script>
     </body>
 

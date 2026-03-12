@@ -130,7 +130,7 @@ public class UsersController extends HttpServlet {
 
                 // 1. Lấy dữ liệu từ form JSP gửi lên
                 String fullName = request.getParameter("fullName");
-                String userName = request.getParameter("userName"); // name trên form là userName
+                String username = request.getParameter("username"); // name trên form là userName
                 String password = request.getParameter("password");
                 String phone = request.getParameter("phone"); // Lấy phone (nếu bạn thêm vào form)
 
@@ -145,7 +145,7 @@ public class UsersController extends HttpServlet {
                 // 2. Đóng gói vào object User
                 User newUser = new User();
                 newUser.setFullName(fullName);
-                newUser.setUsername(userName);
+                newUser.setUsername(username);
                 newUser.setPassword(password);
                 newUser.setPhone(phone);
                 newUser.setRoleID(roleID);     // Set RoleID
@@ -194,13 +194,16 @@ public class UsersController extends HttpServlet {
                 response.sendRedirect("Users");
                 return; // Thêm return để kết thúc nhánh này
             } else if (action.equals("delete")) {
-//                int slotID = Integer.parseInt(request.getParameter("slotID"));
-//                boolean success = slotDAO.deleteSlot(slotID);
-//                if (success) {
-//                    session.setAttribute("successMsg", "Slot deleted successfully.");
-//                } else {
-//                    session.setAttribute("errorMsg", "Failed to delete slot, it might be in use.");
-//                }
+                int userID = Integer.parseInt(request.getParameter("userID"));
+                User deleteUser = new User();
+                deleteUser.setUserID(userID);
+                UserDAO uDAO = new UserDAO();
+                boolean success = uDAO.deleteUser(deleteUser);
+                if (success) {
+                    session.setAttribute("successMsg", "User deleted successfully.");
+                } else {
+                    session.setAttribute("errorMsg", "Failed to delete user.");
+                }
             }
         } catch (Exception e) {
             session.setAttribute("errorMsg", "Invalid input Data.");
