@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -112,8 +113,8 @@ public class DashboardDAO extends DBContext {
         return list;
     }
     
-    public double getTodaysRevenue() {
-        double revenue = 0;
+    public BigDecimal getTodaysRevenue() {
+        BigDecimal revenue = null;
         try {
             // Lấy tổng tiền của các giao dịch có ExitTime trong ngày hôm nay
             String sql = """
@@ -126,7 +127,7 @@ public class DashboardDAO extends DBContext {
             rs = stm.executeQuery();
             
             if (rs.next()) {
-                revenue = rs.getDouble("Revenue");
+                revenue = rs.getBigDecimal("Revenue");
             }
         } catch (Exception e) {
             System.out.println("getTodaysRevenue Error: " + e.getMessage());

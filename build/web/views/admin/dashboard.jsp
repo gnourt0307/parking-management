@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="utils.FormatCurrency" %>
 <!doctype html>
 <html lang="en">
 
@@ -37,7 +38,7 @@
                         </div>
                         <div class="card">
                             <h3>Today's Revenue</h3>
-                            <div class="value">${todaysRevenue}</div> <!<!-- Fix for auto -->
+                            <div class="value">${FormatCurrency.formatVND(todaysRevenue)}</div> <!<!-- Fix for auto -->
                         </div>
                     </div>
 

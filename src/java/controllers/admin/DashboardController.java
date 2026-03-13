@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.List;
 import models.ActivityLog;
 import models.User;
@@ -82,7 +83,7 @@ public class DashboardController extends HttpServlet {
         request.setAttribute("vehiclesParked", vehiclesParked);
         int availableSlots = dDAO.getAvailableSlotsCount();
         request.setAttribute("availableSlots", availableSlots);
-        double todaysRevenue = dDAO.getTodaysRevenue();
+        BigDecimal todaysRevenue = dDAO.getTodaysRevenue();
         request.setAttribute("todaysRevenue", todaysRevenue);
         List<ActivityLog> recentActivities = dDAO.getRecentActivities();
         request.setAttribute("recentActivities", recentActivities);
