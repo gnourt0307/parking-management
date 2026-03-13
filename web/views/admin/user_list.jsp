@@ -147,7 +147,7 @@
 
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="text" name="password" id="password" required>
+                        <input type="password" name="password" id="password" required>
                     </div>
                     <div class="form-group">
                         <label>Role</label>

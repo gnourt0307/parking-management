@@ -158,54 +158,9 @@ public class SlotDAO extends DBContext {
         return false;
     }
     
-    public int getTotalCapacity() {
-        int total = 0;
-        try {
-            // Đếm tổng số lượng ID trong bảng Slots
-            String sql = "SELECT COUNT(SlotID) as Total FROM Slots";
-            stm = connection.prepareStatement(sql);
-            rs = stm.executeQuery();
-            
-            if (rs.next()) {
-                total = rs.getInt("Total");
-            }
-        } catch (SQLException e) {
-            System.out.println("getTotalCapacity Error: " + e.getMessage());
-        }
-        return total;
-    }
     
-    public int getOccupiedSlotsCount() {
-        int count = 0;
-        try {
-            // Đếm các slot có trạng thái là Occupied (dùng UPPER để không phân biệt hoa thường)
-            String sql = "SELECT COUNT(SlotID) as OccupiedCount FROM Slots WHERE UPPER(Status) = 'OCCUPIED'";
-            stm = connection.prepareStatement(sql);
-            rs = stm.executeQuery();
-            
-            if (rs.next()) {
-                count = rs.getInt("OccupiedCount");
-            }
-        } catch (SQLException e) {
-            System.out.println("getOccupiedSlotsCount Error: " + e.getMessage());
-        }
-        return count;
-    }
     
-    public int getAvailableSlotsCount() {
-        int count = 0;
-        try {
-            // Đếm các slot có trạng thái chính xác là Available
-            String sql = "SELECT COUNT(SlotID) as AvailableCount FROM Slots WHERE UPPER(Status) = 'AVAILABLE'";
-            stm = connection.prepareStatement(sql);
-            rs = stm.executeQuery();
-            
-            if (rs.next()) {
-                count = rs.getInt("AvailableCount");
-            }
-        } catch (SQLException e) {
-            System.out.println("getAvailableSlotsCount Error: " + e.getMessage());
-        }
-        return count;
-    }
+    
+    
+    
 }

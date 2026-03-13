@@ -75,14 +75,15 @@ public class DashboardController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
-        SlotDAO sDAO = new SlotDAO();
-        int totalCapacity = sDAO.getTotalCapacity();
-        request.setAttribute("totalCapacity", totalCapacity);
-        int vehiclesParked = sDAO.getOccupiedSlotsCount();
-        request.setAttribute("vehiclesParked", vehiclesParked);
-        int availableSlots = sDAO.getAvailableSlotsCount();
-        request.setAttribute("availableSlots", availableSlots);
         DashboardDAO dDAO = new DashboardDAO();
+        int totalCapacity = dDAO.getTotalCapacity();
+        request.setAttribute("totalCapacity", totalCapacity);
+        int vehiclesParked = dDAO.getOccupiedSlotsCount();
+        request.setAttribute("vehiclesParked", vehiclesParked);
+        int availableSlots = dDAO.getAvailableSlotsCount();
+        request.setAttribute("availableSlots", availableSlots);
+        double todaysRevenue = dDAO.getTodaysRevenue();
+        request.setAttribute("todaysRevenue", todaysRevenue);
         List<ActivityLog> recentActivities = dDAO.getRecentActivities();
         request.setAttribute("recentActivities", recentActivities);
         rd = request.getRequestDispatcher("views/admin/dashboard.jsp");

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 
@@ -36,7 +37,7 @@
                         </div>
                         <div class="card">
                             <h3>Today's Revenue</h3>
-                            <div class="value">$1,250</div> <!<!-- Fix for auto -->
+                            <div class="value">${todaysRevenue}</div> <!<!-- Fix for auto -->
                         </div>
                     </div>
 
