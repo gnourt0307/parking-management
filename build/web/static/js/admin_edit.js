@@ -105,7 +105,7 @@ function openDetailModal(btn, ...args) {
             <tr>
                 <td>${types[i]}</td>
                 <td>${tickets[i]}</td>
-                <td>${revenue[i].toLocaleString('vi-VN')}đ</td>
+                <td>${revenue[i].toLocaleString('vi-VN')}₫</td>
             </tr>
         `;
         }

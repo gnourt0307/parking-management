@@ -4,7 +4,9 @@
  */
 package controllers.customer;
 
+import dal.CustomerVehicleDAO;
 import dal.UserDAO;
+import dal.VehicleTypeDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,7 +15,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import models.CustomerVehicle;
 import models.User;
+import models.VehicleType;
 
 /**
  *
@@ -64,9 +70,18 @@ public class ProfileController extends HttpServlet {
         RequestDispatcher rd;
         if (onSessionUser == null) {
             rd = request.getRequestDispatcher("views/auth/login.jsp");
-        } else {
-            rd = request.getRequestDispatcher("views/customer/profile.jsp");
+            rd.forward(request, response);
+            return;
         }
+
+        CustomerVehicleDAO customerVehicleDao = new CustomerVehicleDAO();
+        VehicleTypeDAO vehicleTypeDao = new VehicleTypeDAO();
+        List<VehicleType> vehicleList = vehicleTypeDao.getAllTypes();
+        ArrayList<CustomerVehicle> customerVehicleList = customerVehicleDao.getCustomerVehicles(onSessionUser);
+
+        session.setAttribute("vehicleList", vehicleList);
+        session.setAttribute("customerVehicleList", customerVehicleList);
+        rd = request.getRequestDispatcher("views/customer/profile.jsp");
         rd.forward(request, response);
     }
 
@@ -86,6 +101,8 @@ public class ProfileController extends HttpServlet {
 
         String action = request.getParameter("action");
         UserDAO userDao = new UserDAO();
+        VehicleTypeDAO vehicleTypeDao = new VehicleTypeDAO();
+        CustomerVehicleDAO customerVehicleDao = new CustomerVehicleDAO();
 
         if ("updateProfile".equals(action)) {
             String fullname = request.getParameter("fullname");
@@ -122,6 +139,24 @@ public class ProfileController extends HttpServlet {
                     request.setAttribute("errorMsg", "Change password failed.");
                 }
             }
+        } else if ("add".equals(action)) {
+
+            String typeName = request.getParameter("vehicleTypeName");
+            String licensePlate = request.getParameter("licensePlate");
+            int typeId = vehicleTypeDao.findTypeIdByName(typeName);
+            VehicleType vehicleType = new VehicleType(typeId, typeName);
+            CustomerVehicle customerVehicle = new CustomerVehicle(user.getUserID(), licensePlate, typeId, vehicleType);
+
+            boolean success = customerVehicleDao.addCustomerVehicle(customerVehicle);
+
+            if (success) {
+                ArrayList<CustomerVehicle> customerVehicleList = customerVehicleDao.getCustomerVehicles(user);
+                request.setAttribute("successMsg", "Added new vehicle successfully.");
+                session.setAttribute("customerVehicleList", customerVehicleList);
+            } else {
+                request.setAttribute("errorMsg", "Added new vehicle failed.");
+            }
+
         }
         request.getRequestDispatcher("views/customer/profile.jsp").forward(request, response);
     }

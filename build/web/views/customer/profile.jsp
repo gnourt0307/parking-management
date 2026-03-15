@@ -26,7 +26,7 @@
                         <div class="alert alert-danger">${errorMsg}</div>
                         <c:remove var="errorMsg" scope="request" />
                     </c:if>
-                    
+
                     <h2><i class="fa-solid fa-id-card-clip"></i> My Profile & Vehicles</h2>
 
                     <div class="d-flex gap-30">
@@ -93,32 +93,30 @@
                         <div class="flex-1">
                             <div class="profile-vehicles-header">
                                 <h3><i class="fa-solid fa-car"></i> My Registered Vehicles</h3>
-                                <button class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i> Add Vehicle</button>
+                                <button class="btn btn-success btn-sm" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Add Vehicle</button>
                             </div>
 
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>License Plate</th>
                                         <th>Type</th>
+                                        <th>License Plate</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>30A-999.99</td>
-                                        <td>Car</td>
-                                        <td>
-                                            <button class="btn btn-danger btn-xs"><i class="fa-solid fa-trash-can"></i> Remove</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>29F1-123.45</td>
-                                        <td>Motorbike</td>
-                                        <td>
-                                            <button class="btn btn-danger btn-xs"><i class="fa-solid fa-trash-can"></i> Remove</button>
-                                        </td>
-                                    </tr>
+                                    <c:if test="${sessionScope.customerVehicleList != null || !sessionScope.customerVehicleList.isEmpty()}">
+                                        <c:forEach var="v" items="${sessionScope.customerVehicleList}">
+                                            <tr>
+                                                <td>${v.vehicleType.typeName}</td>
+                                                <td>${v.licensePlate}</td>
+                                                <td>
+                                                    <button class="btn btn-sFm" style="padding: 2px 16px" onclick="openEditModal()"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                    <button class="btn btn-danger btn-xs"><i class="fa-solid fa-trash-can"></i> Remove</button>
+                                                </td>
+                                            </tr>       
+                                        </c:forEach>
+                                    </c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -127,7 +125,57 @@
             </main>
         </div>
 
+        <!-- Add Pricing Modal -->
+        <div id="addModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('addModal')">&times;</span>
+                <h3>Add your vehicle</h3>
+                <form action="Profile" method="POST">
+                    <input type="hidden" name="action" value="add">
+                    <div class="form-group">
+                        <label>Vehicle Type</label>
+                        <select name="vehicleTypeName">
+                            <c:forEach var="v" items="${sessionScope.vehicleList}">
+                                <option value="${v.typeName}">${v.typeName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>License plate</label>
+                        <input type="text" name="licensePlate" class="filter-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">Save your vehicle</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Pricing Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
+                <h3>Edit Your Vehicle</h3>
+                <form action="Pricing" method="POST">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="pricing" id="editCustomerVehicle">
+                    <div class="form-group">
+                        <label>Vehicle Type</label>
+                        <select name="vehicleTypeName">
+                            <c:forEach var="v" items="${sessionScope.vehicleList}">
+                                <option value="${v.typeName}">${v.typeName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>License plate</label>
+                        <input type="number" name="licensePlate" id="licensePlate" required>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">Update Zone</button>
+                </form>
+            </div>
+        </div>      
+
         <jsp:include page="../includes/footer.jsp" />
+        <script src="static/js/admin_edit.js"></script>
     </body>
 
 </html>

@@ -9,19 +9,30 @@ package models;
  * @author Admin
  */
 public class CustomerVehicle {
+
     private int vehicleID;
     private int userID;
     private String licensePlate;
     private int typeID;
+    private VehicleType vehicleType;
 
     public CustomerVehicle() {
     }
 
-    public CustomerVehicle(int vehicleID, int userID, String licensePlate, int typeID) {
+    public CustomerVehicle(int vehicleID, int userID, String licensePlate, VehicleType vehicleType) {
         this.vehicleID = vehicleID;
         this.userID = userID;
         this.licensePlate = licensePlate;
         this.typeID = typeID;
+        this.vehicleType = vehicleType;
+    }
+
+    public CustomerVehicle(int userID, String licensePlate,int typeID, VehicleType vehicleType) {
+        this.vehicleID = vehicleID;
+        this.userID = userID;
+        this.licensePlate = licensePlate;
+        this.typeID = typeID;
+        this.vehicleType = vehicleType;
     }
 
     public int getVehicleID() {
@@ -55,4 +66,13 @@ public class CustomerVehicle {
     public void setTypeID(int typeID) {
         this.typeID = typeID;
     }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
 }
