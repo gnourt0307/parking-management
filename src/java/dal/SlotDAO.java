@@ -157,10 +157,20 @@ public class SlotDAO extends DBContext {
         }
         return false;
     }
-    
-    
-    
-    
-    
-    
+
+    /**
+     * Cập nhật trạng thái của Slot (AVAILABLE, OCCUPIED, MAINTENANCE).
+     */
+    public boolean setSlotStatus(int slotID, String status) {
+        String sql = "UPDATE Slots SET Status = ? WHERE SlotID = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, status);
+            stm.setInt(2, slotID);
+            return stm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Error in setSlotStatus: " + e.getMessage());
+        }
+        return false;
+    }
 }

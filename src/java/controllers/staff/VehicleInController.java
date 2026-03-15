@@ -5,14 +5,18 @@
 
 package controllers.staff;
 
+import dal.SlotDAO;
+import dal.TicketDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import models.Slot;
+import models.Ticket;
 import models.User;
 
 /**
@@ -20,34 +24,10 @@ import models.User;
  * @author Admin
  */
 public class VehicleInController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VehicleInController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VehicleInController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,19 +41,27 @@ public class VehicleInController extends HttpServlet {
         RequestDispatcher rd;
         if (user == null) {
             rd = request.getRequestDispatcher("views/auth/login.jsp");
+            rd.forward(request, response);
+            return;
         } else {
             if (user.getRoleID() != 2) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
-            } else {
-                rd = request.getRequestDispatcher("views/staff/vehicle_in.jsp");
             }
         }
+
+        // Lấy danh sách slot để staff chọn khi check-in
+        SlotDAO slotDAO = new SlotDAO();
+        List<Slot> slots = slotDAO.getAllSlots(null, null);
+        request.setAttribute("slots", slots);
+
+        rd = request.getRequestDispatcher("views/staff/vehicle_in.jsp");
         rd.forward(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -81,17 +69,63 @@ public class VehicleInController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user == null || user.getRoleID() != 2) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        String action = request.getParameter("action");
+        if (action == null) {
+            response.sendRedirect("VehicleIn");
+            return;
+        }
+
+        if (action.equals("checkin")) {
+            try {
+                String licensePlate = request.getParameter("licensePlate");
+                int typeID = Integer.parseInt(request.getParameter("vehicleType"));
+                int slotID = Integer.parseInt(request.getParameter("assignedSlot"));
+
+                TicketDAO ticketDAO = new TicketDAO();
+                Ticket ticket = new Ticket();
+
+                // Đơn giản tạo mã vé theo timestamp
+                ticket.setTicketCode("VEX-" + System.currentTimeMillis());
+                ticket.setLicensePlate(licensePlate);
+                ticket.setTypeID(typeID);
+                ticket.setSlotID(slotID);
+                ticket.setCustomerID(null); // khách vãng lai
+                ticket.setCreatedBy(user.getUserID());
+
+                boolean created = ticketDAO.createTicket(ticket);
+
+                if (created) {
+                    // Đánh dấu slot đang được sử dụng
+                    SlotDAO slotDAO = new SlotDAO();
+                    slotDAO.setSlotStatus(slotID, "OCCUPIED");
+                    session.setAttribute("successMsg", "Check-in thành công.");
+                } else {
+                    session.setAttribute("errorMsg", "Check-in thất bại. Vui lòng thử lại.");
+                }
+            } catch (Exception e) {
+                session.setAttribute("errorMsg", "Dữ liệu không hợp lệ.");
+            }
+            response.sendRedirect("VehicleIn");
+        } else {
+            response.sendRedirect("VehicleIn");
+        }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Vehicle check-in controller";
+    }
 }

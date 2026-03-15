@@ -5,14 +5,22 @@
 
 package controllers.staff;
 
+import dal.SlotDAO;
+import dal.TicketDAO;
+import dal.TransactionDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import utils.FormatCurrency;
+import models.Ticket;
 import models.User;
 
 /**
@@ -20,34 +28,12 @@ import models.User;
  * @author Admin
  */
 public class VehicleOutController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VehicleOutController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VehicleOutController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    private static final DateTimeFormatter ENTRY_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss dd/M/yyyy");
+
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,19 +47,21 @@ public class VehicleOutController extends HttpServlet {
         RequestDispatcher rd;
         if (user == null) {
             rd = request.getRequestDispatcher("views/auth/login.jsp");
+            rd.forward(request, response);
+            return;
         } else {
             if (user.getRoleID() != 2) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
-            } else {
-                rd = request.getRequestDispatcher("views/staff/vehicle_out.jsp");
             }
         }
+        rd = request.getRequestDispatcher("views/staff/vehicle_out.jsp");
         rd.forward(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -81,17 +69,143 @@ public class VehicleOutController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user == null || user.getRoleID() != 2) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        String action = request.getParameter("action");
+        if (action == null) {
+            response.sendRedirect("VehicleOut");
+            return;
+        }
+
+        TicketDAO ticketDAO = new TicketDAO();
+
+        try {
+            if (action.equals("search")) {
+                String plateSearch = request.getParameter("plateSearch");
+                Ticket ticket = ticketDAO.findActiveTicketByPlate(plateSearch);
+
+                if (ticket != null) {
+                    // Tính tiền tạm thời theo số giờ, làm tròn lên 1 giờ
+                    LocalDateTime now = LocalDateTime.now();
+                    Duration duration = Duration.between(ticket.getEntryTime(), now);
+                    long minutes = duration.toMinutes();
+                    long hours = minutes / 60;
+                    if (minutes % 60 != 0) {
+                        hours++;
+                    }
+                    if (hours <= 0) {
+                        hours = 1;
+                    }
+
+                    BigDecimal hourly = ticket.getHourlyRate();
+                    if (hourly == null) {
+                        hourly = BigDecimal.ZERO;
+                    }
+                    BigDecimal totalAmount = hourly.multiply(BigDecimal.valueOf(hours));
+
+                    request.setAttribute("ticket", ticket);
+                    request.setAttribute("totalAmount", FormatCurrency.formatVND(totalAmount));
+                    if (ticket.getEntryTime() != null) {
+                        String formatted = ticket.getEntryTime().format(ENTRY_TIME_FORMATTER);
+                        request.setAttribute("entryTimeFormatted", formatted);
+                    }
+                }
+                RequestDispatcher rd = request.getRequestDispatcher("views/staff/vehicle_out.jsp");
+                rd.forward(request, response);
+                return;
+            } else if (action.equals("confirm")) {
+                int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+                String paymentMethod = request.getParameter("paymentMethod");
+                if (paymentMethod == null || paymentMethod.isEmpty()) {
+                    paymentMethod = "CASH";
+                }
+
+                Ticket ticket = ticketDAO.getTicketById(ticketID);
+                if (ticket == null) {
+                    session.setAttribute("errorMsg", "Không tìm thấy vé để thanh toán.");
+                    response.sendRedirect("VehicleOut");
+                    return;
+                }
+
+                LocalDateTime now = LocalDateTime.now();
+                Duration duration = Duration.between(ticket.getEntryTime(), now);
+                long minutes = duration.toMinutes();
+                long hours = minutes / 60;
+                if (minutes % 60 != 0) {
+                    hours++;
+                }
+                if (hours <= 0) {
+                    hours = 1;
+                }
+
+                BigDecimal hourly = ticket.getHourlyRate();
+                if (hourly == null) {
+                    hourly = BigDecimal.ZERO;
+                }
+                BigDecimal totalAmount = hourly.multiply(BigDecimal.valueOf(hours));
+
+                // Cập nhật trạng thái vé và tạo transaction
+                boolean statusUpdated = ticketDAO.updateTicketStatus(ticketID, "COMPLETED");
+                TransactionDAO transDAO = new TransactionDAO();
+                boolean transCreated = transDAO.createTransaction(ticketID, totalAmount, paymentMethod, user.getUserID());
+
+                // Mở lại slot cho xe khác
+                SlotDAO slotDAO = new SlotDAO();
+                slotDAO.setSlotStatus(ticket.getSlotID(), "AVAILABLE");
+
+                if (statusUpdated && transCreated) {
+                    session.setAttribute("successMsg", "Thanh toán thành công.");
+                } else {
+                    session.setAttribute("errorMsg", "Thanh toán thất bại.");
+                }
+                response.sendRedirect("VehicleOut");
+                return;
+            } else if (action.equals("lost")) {
+                int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+                Ticket ticket = ticketDAO.getTicketById(ticketID);
+                if (ticket == null) {
+                    session.setAttribute("errorMsg", "Không tìm thấy vé để xử lý mất vé.");
+                    response.sendRedirect("VehicleOut");
+                    return;
+                }
+
+                boolean statusUpdated = ticketDAO.updateTicketStatus(ticketID, "COMPLETED");
+           
+                BigDecimal totalAmount = new BigDecimal("50000");
+                TransactionDAO transDAO = new TransactionDAO();
+                boolean transCreated = transDAO.createTransaction(ticketID, totalAmount, "LOST_TICKET", user.getUserID());
+
+                SlotDAO slotDAO = new SlotDAO();
+                slotDAO.setSlotStatus(ticket.getSlotID(), "AVAILABLE");
+
+                if (statusUpdated && transCreated) {
+                    session.setAttribute("successMsg", "Xử lý mất vé thành công.");
+                } else {
+                    session.setAttribute("errorMsg", "Xử lý mất vé thất bại.");
+                }
+                response.sendRedirect("VehicleOut");
+                return;
+            }
+        } catch (Exception e) {
+            session.setAttribute("errorMsg", "Dữ liệu không hợp lệ.");
+        }
+
+        response.sendRedirect("VehicleOut");
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Vehicle check-out controller";
+    }
 }

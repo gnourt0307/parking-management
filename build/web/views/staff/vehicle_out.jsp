@@ -21,41 +21,51 @@
 
         <div class="checkout-layout">
           <div class="search-section">
-            <form action="vehicle_out.jsp" method="get">
+            <form action="VehicleOut" method="post">
+              <input type="hidden" name="action" value="search" />
               <div class="form-group">
                 <label for="plateSearch">Enter License Plate</label>
                 <div class="d-flex gap-10">
                   <input type="text" id="plateSearch" name="plateSearch" placeholder="License Plate..." required
-                    class="flex-1" />
+                    class="flex-1" value="${param.plateSearch}" />
                   <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
                 </div>
               </div>
             </form>
           </div>
 
-          <div class="invoice-section">
-            <h3 class="invoice-header"><i class="fa-solid fa-file-invoice"></i> Invoice</h3>
+          <c:if test="${not empty ticket}">
+            <div class="invoice-section">
+              <h3 class="invoice-header"><i class="fa-solid fa-file-invoice"></i> Invoice</h3>
 
-            <p><strong>Ticket ID:</strong> TKT-987654</p>
-            <p><strong>License Plate:</strong> 29A-123.45</p>
-            <p><strong>Vehicle Type:</strong> Car</p>
-            <p><strong>Check-In Time:</strong> 10:30 AM</p>
-            <p><strong>Check-Out Time:</strong> 14:45 PM</p>
-            <p><strong>Duration:</strong> 4 hours 15 mins</p>
+              <p><strong>Ticket ID:</strong> ${ticket.ticketID}</p>
+              <p><strong>Ticket Code:</strong> ${ticket.ticketCode}</p>
+              <p><strong>License Plate:</strong> ${ticket.licensePlate}</p>
+              <p><strong>Check-In Time:</strong> ${entryTimeFormatted}</p>
 
-            <div class="invoice-total-container">
-              <h2 class="invoice-total-text">Total: $40.00</h2>
+              <div class="invoice-total-container">
+                <h2 class="invoice-total-text">Total: ${totalAmount}</h2>
+              </div>
+
+              <div class="invoice-actions">
+                <form action="VehicleOut" method="post" style="display:inline-block;">
+                  <input type="hidden" name="action" value="confirm" />
+                  <input type="hidden" name="ticketID" value="${ticket.ticketID}" />
+                  <input type="hidden" name="paymentMethod" value="CASH" />
+                  <button class="btn btn-success btn-flex-large" type="submit">
+                    Confirm Payment
+                  </button>
+                </form>
+                <form action="VehicleOut" method="post" style="display:inline-block; margin-left:10px;">
+                  <input type="hidden" name="action" value="lost" />
+                  <input type="hidden" name="ticketID" value="${ticket.ticketID}" />
+                  <button class="btn btn-danger btn-flex-large" type="submit">
+                    Mark as Lost Ticket
+                  </button>
+                </form>
+              </div>
             </div>
-
-            <div class="invoice-actions">
-              <button class="btn btn-success btn-flex-large">
-                Confirm Payment
-              </button>
-              <button class="btn btn-danger btn-flex-large">
-                Mark as Lost Ticket
-              </button>
-            </div>
-          </div>
+          </c:if>
         </div>
       </div>
     </main>

@@ -88,6 +88,10 @@
         <servlet-class>controllers.staff.VehicleOutController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>StaffHistoryController</servlet-name>
+        <servlet-class>controllers.staff.StaffHistoryController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ProfileController</servlet-name>
         <servlet-class>controllers.customer.ProfileController</servlet-class>
     </servlet>
@@ -95,6 +99,10 @@
         <servlet-name>HistoryController</servlet-name>
         <servlet-class>controllers.customer.HistoryController</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffHistoryController</servlet-name>
+        <url-pattern>/StaffHistory</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>

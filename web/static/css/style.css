@@ -1181,3 +1181,86 @@ input[type="date"]:focus {
     font-size: 0.85rem;
   }
 }
+
+/* Staff specific styles (moved from staff.css) */
+.slot-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.zone-block {
+  border-radius: 12px;
+  padding: 16px 18px 12px;
+  background: #f7f9fc;
+  border: 1px solid #e0e4f0;
+}
+
+.zone-block h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f3b87;
+}
+
+.slot-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.slot-cell {
+  flex: 1;
+  min-width: 0;
+  padding: 18px 6px;
+  border-radius: 10px;
+  border: 1px solid #d6e2ff;
+  background: #f4f8ff;
+  font-weight: 600;
+  font-size: 13px;
+  color: #1f3b87;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.slot-cell.slot-available {
+  background: #f2fff7;
+  border-color: #b6f0c8;
+  color: #188b42;
+}
+
+.slot-cell.slot-occupied {
+  background: #eef4ff;
+  border-color: #9bb7ff;
+  color: #1341a3;
+}
+
+.slot-cell.slot-maintenance {
+  background: #fff6ea;
+  border-color: #ffd9a1;
+  color: #b36b00;
+}
+
+.slot-cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.slot-cell.slot-available:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.ticket-preview-box {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+}
+
+.history-table td,
+.history-table th {
+  white-space: nowrap;
+}
