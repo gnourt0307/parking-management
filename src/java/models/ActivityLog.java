@@ -38,7 +38,7 @@ public class ActivityLog {
     
     public String getFormattedTime() {
         if (activityTime != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/M/yyyy");
             return activityTime.format(formatter);
         }
         return "";

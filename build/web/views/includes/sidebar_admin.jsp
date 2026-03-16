@@ -28,6 +28,7 @@
                         class="fa-solid fa-file-invoice-dollar"></i> Reports</a></li>
         </ul>
         <div class="sidebar-footer">
+            <jsp:include page="header.jsp" />
             <a href="Logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </div>
     </aside>

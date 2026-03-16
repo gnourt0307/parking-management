@@ -98,7 +98,7 @@ public class ReportDAO extends DBContext {
                                              FROM DailySummary d
                                              LEFT JOIN TopRevenue t 
                                                  ON d.Date = t.Date
-                                             ORDER BY d.Date;
+                                             ORDER BY d.Date DESC;
                                              """;
             stm = connection.prepareStatement(strSQL);
             stm.setString(1, startDate);
@@ -222,7 +222,7 @@ public class ReportDAO extends DBContext {
                                                  LEFT JOIN TopRevenue t 
                                                      ON m.Month = t.Month
                                                      AND t.rn = 1
-                                                 ORDER BY m.Month;
+                                                 ORDER BY m.Month DESC;
                                              """;
             stm = connection.prepareStatement(strSQL);
             stm.setString(1, startDate);

@@ -87,7 +87,7 @@ public class DashboardDAO extends DBContext {
                              JOIN Tickets tk ON tr.TicketID = tk.TicketID 
                              JOIN Users u ON tr.StaffID = u.UserID
                          ) AS ActivityLog
-                         ORDER BY ActivityTime ASC
+                         ORDER BY ActivityTime DESC
                          """;
             
             stm = connection.prepareStatement(sql);
@@ -102,8 +102,6 @@ public class DashboardDAO extends DBContext {
                 log.licensePlate = rs.getString("LicensePlate");
                 log.actionType = rs.getString("ActionType");
                 log.staffName = rs.getString("StaffName");
-                System.out.println("---- KIỂM TRA DEBUG ----");
-                System.out.println("Số lượng Activity lấy được: " + list.size());
                 list.add(log);
             }
         } catch (Exception e) {

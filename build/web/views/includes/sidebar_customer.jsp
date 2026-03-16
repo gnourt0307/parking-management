@@ -20,6 +20,7 @@
                         class="fa-solid fa-clock-rotate-left"></i> History</a></li>
         </ul>
         <div class="sidebar-footer">
+            <jsp:include page="header.jsp" />
             <a href="Logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </div>
     </aside>
