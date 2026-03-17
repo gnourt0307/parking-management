@@ -4,7 +4,7 @@
 <c:set var="currentUser" value="${sessionScope.user}" />
 
 <c:if test="${not empty currentUser}">
-  <div class="sidebar-user-box">
+  <a class="sidebar-user-box" href="Profile" style="text-decoration:none;">
     <div class="sidebar-user-avatar">
       <i class="fa-solid fa-circle-user"></i>
     </div>
@@ -28,5 +28,5 @@
         </c:choose>
       </div>
     </div>
-  </div>
+  </a>
 </c:if>
