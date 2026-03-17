@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
 
@@ -18,6 +20,15 @@
     <main class="admin-main">
       <div class="container main-content width-full-max-none">
         <h2><i class="fa-solid fa-arrow-right-from-bracket"></i> Vehicle Check-Out</h2>
+
+        <c:if test="${not empty sessionScope.successMsg}">
+          <div class="alert alert-success">${sessionScope.successMsg}</div>
+          <c:remove var="successMsg" scope="session" />
+        </c:if>
+        <c:if test="${not empty sessionScope.errorMsg}">
+          <div class="alert alert-danger">${sessionScope.errorMsg}</div>
+          <c:remove var="errorMsg" scope="session" />
+        </c:if>
 
         <div class="checkout-layout">
           <div class="search-section">

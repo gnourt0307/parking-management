@@ -19,6 +19,15 @@
                 <div class="container main-content width-full-max-none">
                     <h2><i class="fa-solid fa-clock-rotate-left"></i> My Ticket History</h2>
 
+                    <c:if test="${not empty sessionScope.successMsg}">
+                        <div class="alert alert-success">${sessionScope.successMsg}</div>
+                        <c:remove var="successMsg" scope="session" />
+                    </c:if>
+                    <c:if test="${not empty sessionScope.errorMsg}">
+                        <div class="alert alert-danger">${sessionScope.errorMsg}</div>
+                        <c:remove var="errorMsg" scope="session" />
+                    </c:if>
+
                     <div>
                         <form action="StaffHistory" method="get" style="display:flex; align-items:center; gap: 15px; margin-bottom: 20px; flex-grow: 1;">
                             <label for="search" style="font-weight:500;">Search:</label>
