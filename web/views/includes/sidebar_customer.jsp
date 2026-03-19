@@ -17,7 +17,7 @@
 
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-
+    
     <aside class="sidebar">
         <a href="Profile" class="navbar-brand">
             <c:choose>

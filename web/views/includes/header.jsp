@@ -3,7 +3,7 @@
 
 <c:set var="currentUser" value="${sessionScope.user}" />
 
-<c:if test="${not empty currentUser}">
+<c:if test="${not empty currentUser && currentUser.roleID != 3}">
   <a class="sidebar-user-box" href="Profile" style="text-decoration:none;">
     <div class="sidebar-user-avatar">
       <i class="fa-solid fa-circle-user"></i>
@@ -23,7 +23,6 @@
         <c:choose>
           <c:when test="${currentUser.roleID == 1}">ADMIN</c:when>
           <c:when test="${currentUser.roleID == 2}">STAFF</c:when>
-          <c:when test="${currentUser.roleID == 3}">CUSTOMER</c:when>
           <c:otherwise>User</c:otherwise>
         </c:choose>
       </div>
