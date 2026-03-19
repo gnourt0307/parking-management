@@ -56,6 +56,12 @@ public class VehicleOutController extends HttpServlet {
                 return;
             }
         }
+        TicketDAO ticketDAO = new TicketDAO();
+        request.setAttribute("activeTickets", ticketDAO.getActiveTicketsList());
+        
+        dal.VehicleTypeDAO vtDAO = new dal.VehicleTypeDAO();
+        request.setAttribute("vehicleTypes", vtDAO.getAllTypes());
+        
         rd = request.getRequestDispatcher("views/staff/vehicle_out.jsp");
         rd.forward(request, response);
     }
@@ -120,6 +126,10 @@ public class VehicleOutController extends HttpServlet {
                         request.setAttribute("entryTimeFormatted", formatted);
                     }
                 }
+                request.setAttribute("activeTickets", ticketDAO.getActiveTicketsList());
+                dal.VehicleTypeDAO vtDAO = new dal.VehicleTypeDAO();
+                request.setAttribute("vehicleTypes", vtDAO.getAllTypes());
+                
                 RequestDispatcher rd = request.getRequestDispatcher("views/staff/vehicle_out.jsp");
                 rd.forward(request, response);
                 return;

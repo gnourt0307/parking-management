@@ -40,11 +40,9 @@
                   <div class="form-group">
                     <label for="vehicleType">Vehicle Type *</label>
                     <select id="vehicleType" name="vehicleType" required>
-                      <!-- Theo Example_data_v3.sql: 1=Motorbike, 2=Car, 3=Bicycle, 4=Electric Car -->
-                      <option value="1">Motorbike</option>
-                      <option value="2">Car</option>
-                      <option value="3">Bicycle</option>
-                      <option value="4">Electric Car</option>
+                      <c:forEach items="${vehicleTypes}" var="vt">
+                        <option value="${vt.typeID}">${vt.typeName}</option>
+                      </c:forEach>
                     </select>
                   </div>
                   <div class="form-group">

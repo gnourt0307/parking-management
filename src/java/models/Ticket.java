@@ -105,6 +105,11 @@ public class Ticket {
         this.entryTime = entryTime;
     }
 
+    public String getEntryTimeFormatted() {
+        if (entryTime == null) return "-";
+        return entryTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy"));
+    }
+
     public BigDecimal getHourlyRate() {
         return hourlyRate;
     }

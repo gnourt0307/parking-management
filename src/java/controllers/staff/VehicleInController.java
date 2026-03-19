@@ -55,6 +55,9 @@ public class VehicleInController extends HttpServlet {
         List<Slot> slots = slotDAO.getAllSlots(null, null);
         request.setAttribute("slots", slots);
 
+        dal.VehicleTypeDAO vtDAO = new dal.VehicleTypeDAO();
+        request.setAttribute("vehicleTypes", vtDAO.getAllTypes());
+
         rd = request.getRequestDispatcher("views/staff/vehicle_in.jsp");
         rd.forward(request, response);
     }

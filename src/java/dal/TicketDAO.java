@@ -66,6 +66,58 @@ public class TicketDAO extends DBContext {
         return map;
     }
 
+    public List<Ticket> getActiveTicketsList() {
+        List<Ticket> list = new ArrayList<>();
+        String sql = """
+                    SELECT
+                      t.*,
+                      u.FullName, u.Phone,
+                      s.SlotName,
+                      z.ZoneName,
+                      vt.TypeName
+                    FROM Tickets t
+                    LEFT JOIN Users u ON t.CustomerID = u.UserID
+                    JOIN Slots s ON t.SlotID = s.SlotID
+                    JOIN Zones z ON s.ZoneID = z.ZoneID
+                    JOIN VehicleTypes vt ON t.TypeID = vt.TypeID
+                    WHERE UPPER(t.Status) = 'ACTIVE'
+                    ORDER BY t.EntryTime DESC
+                    """;
+        try {
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Ticket t = new Ticket();
+                t.setTicketID(rs.getInt("TicketID"));
+                t.setTicketCode(rs.getString("TicketCode"));
+                t.setLicensePlate(rs.getString("LicensePlate"));
+                t.setTypeID(rs.getInt("TypeID"));
+                
+                models.VehicleType vt = new models.VehicleType(rs.getInt("TypeID"), rs.getString("TypeName"));
+                t.setVehicleType(vt);
+                
+                t.setSlotID(rs.getInt("SlotID"));
+                java.sql.Timestamp ts = rs.getTimestamp("EntryTime");
+                if (ts != null) {
+                    t.setEntryTime(ts.toLocalDateTime());
+                }
+                
+                Slot slot = new Slot();
+                slot.setSlotID(t.getSlotID());
+                slot.setSlotName(rs.getString("SlotName"));
+                Zone zone = new Zone();
+                zone.setZoneName(rs.getString("ZoneName"));
+                slot.setZone(zone);
+                t.setSlot(slot);
+                
+                list.add(t);
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getActiveTicketsList: " + e.getMessage());
+        }
+        return list;
+    }
+
     /**
      * Tìm vé đang ACTIVE theo biển số.
      */

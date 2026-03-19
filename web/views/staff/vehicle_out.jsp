@@ -31,17 +31,65 @@
         </c:if>
 
         <div class="checkout-layout">
-          <div class="search-section">
-            <form action="VehicleOut" method="post">
-              <input type="hidden" name="action" value="search" />
-              <div class="form-group">
-                <label for="plateSearch">Enter License Plate</label>
-                <div class="d-flex gap-10">
-                  <input type="text" id="plateSearch" name="plateSearch" placeholder="License Plate..." required
-                    class="flex-1" value="${param.plateSearch}" />
-                  <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-                </div>
+          <div class="search-section" style="flex: 2;">
+            <div style="display:flex; gap: 15px; margin-bottom: 20px;">
+              <div class="form-group flex-1">
+                <label for="typeFilter">Filter Vehicle Type</label>
+                <select id="typeFilter" onchange="filterTable()">
+                  <option value="ALL">All Types</option>
+                  <c:forEach items="${vehicleTypes}" var="vt">
+                    <option value="${vt.typeID}">${vt.typeName}</option>
+                  </c:forEach>
+                </select>
               </div>
+              <div class="form-group flex-1">
+                <label for="plateFilter">Select Plate in Parking</label>
+                <select id="plateFilter" onchange="filterTableByPlate()">
+                  <option value="ALL">All Plates</option>
+                  <c:forEach items="${activeTickets}" var="t">
+                      <option value="${t.licensePlate}" data-type="${t.typeID}">${t.licensePlate}</option>
+                  </c:forEach>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+              <table class="data-table" id="activeTicketsTable">
+                <thead style="position: sticky; top: 0; background: #fff; z-index: 1;">
+                  <tr>
+                    <th>License Plate</th>
+                    <th>Type</th>
+                    <th>Entry Time</th>
+                    <th>Zone - Slot</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <c:choose>
+                    <c:when test="${empty activeTickets}">
+                       <tr><td colspan="5" style="text-align:center;">No vehicles currently parked.</td></tr>
+                    </c:when>
+                    <c:otherwise>
+                      <c:forEach items="${activeTickets}" var="t">
+                        <tr class="ticket-row" data-type="${t.typeID}" data-plate="${t.licensePlate}">
+                          <td><strong>${t.licensePlate}</strong></td>
+                          <td>${t.vehicleType.typeName}</td>
+                          <td>${t.entryTimeFormatted}</td>
+                          <td>${t.slot.zone.zoneName} - ${t.slot.slotName}</td>
+                          <td>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="selectForCheckout('${t.licensePlate}')">Check-Out</button>
+                          </td>
+                        </tr>
+                      </c:forEach>
+                    </c:otherwise>
+                  </c:choose>
+                </tbody>
+              </table>
+            </div>
+
+            <form id="loadInvoiceForm" action="VehicleOut" method="post" style="display:none;">
+               <input type="hidden" name="action" value="search" />
+               <input type="hidden" name="plateSearch" id="hiddenPlateSearch" />
             </form>
           </div>
 
@@ -97,6 +145,54 @@
   </div>
   <jsp:include page="../includes/footer.jsp" />
   <script src="static/js/staff_edit.js?v=2"></script>
+  <script>
+    function filterTable() {
+        var type = document.getElementById('typeFilter').value;
+        var plateSelect = document.getElementById('plateFilter');
+        
+        // Hide/show options in plateSelect based on type
+        for(var i=1; i<plateSelect.options.length; i++) {
+            var opt = plateSelect.options[i];
+            if(type === 'ALL' || opt.getAttribute('data-type') === type) {
+                opt.style.display = '';
+            } else {
+                opt.style.display = 'none';
+            }
+        }
+        plateSelect.value = 'ALL'; // reset plate filter when type changes
+        filterRows();
+    }
+
+    function filterTableByPlate() {
+        filterRows();
+    }
+
+    function filterRows() {
+        var type = document.getElementById('typeFilter').value;
+        var plate = document.getElementById('plateFilter').value;
+        var rows = document.querySelectorAll('.ticket-row');
+        
+        rows.forEach(function(row) {
+            var rowType = row.getAttribute('data-type');
+            var rowPlate = row.getAttribute('data-plate');
+            var matchType = (type === 'ALL' || type === rowType);
+            var matchPlate = (plate === 'ALL' || plate === rowPlate);
+            
+            if(matchType && matchPlate) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function selectForCheckout(plate) {
+        if(confirm("Load invoice for vehicle " + plate + "?")) {
+            document.getElementById('hiddenPlateSearch').value = plate;
+            document.getElementById('loadInvoiceForm').submit();
+        }
+    }
+  </script>
 </body>
 
 </html>
