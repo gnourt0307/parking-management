@@ -122,7 +122,7 @@
                         <label>Daily Rate</label>
                         <input type="number" name="dailyRate" id="dailyRate" required>
                     </div>
-                    <button type="submit" class="btn btn-success" style="width: 100%;">Update Zone</button>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">Update Pricing</button>
                 </form>
             </div>
         </div>   
