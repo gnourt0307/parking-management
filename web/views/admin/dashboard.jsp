@@ -48,6 +48,7 @@
                             <tr>
                                 <th>Time</th>
                                 <th>License Plate</th>
+                                <th>Vehicle Type</th>
                                 <th>Slot</th>
                                 <th>Zone</th>
                                 <th>Action</th>
@@ -58,7 +59,7 @@
                         <c:choose>
                             <c:when test="${empty recentActivities}">
                                 <tr>
-                                    <td colspan="6" style="text-align: center;">No recent activity found.</td>
+                                    <td colspan="7" style="text-align: center;">No recent activity found.</td>
                                 </tr>
                             </c:when>
                             <c:otherwise>
@@ -66,6 +67,7 @@
                                     <tr>
                                         <td>${activity.formattedTime}</td>
                                         <td>${activity.licensePlate}</td>
+                                        <td>${activity.vehicleType}</td>
                                         <td>${activity.slot}</td>
                                         <td>${activity.zone}</td>
                                         <td>

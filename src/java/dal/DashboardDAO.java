@@ -77,20 +77,22 @@ public class DashboardDAO extends DBContext {
             // Lấy 10 hoạt động mới nhất bằng cách gộp Tickets và Transactions
             String sql = """
                          SELECT TOP 15 * FROM (
-                             SELECT t.EntryTime AS ActivityTime, t.LicensePlate, s.SlotName, z.ZoneName, 'Check-In' AS ActionType, u.FullName AS StaffName
+                             SELECT t.EntryTime AS ActivityTime, t.LicensePlate, vt.TypeName AS VehicleType, s.SlotName, z.ZoneName, 'Check-In' AS ActionType, u.FullName AS StaffName
                              FROM Tickets t 
                              JOIN Users u ON t.CreatedBy = u.UserID
                              JOIN Slots s ON t.SlotID = s.SlotID
                              JOIN Zones z ON s.ZoneID = z.ZoneID
+                             JOIN VehicleTypes vt ON t.TypeID = vt.TypeID
                              
                              UNION ALL
                              
-                             SELECT tr.ExitTime AS ActivityTime, tk.LicensePlate, s.SlotName, z.ZoneName, 'Check-Out' AS ActionType, u.FullName AS StaffName
+                             SELECT tr.ExitTime AS ActivityTime, tk.LicensePlate, vt.TypeName AS VehicleType, s.SlotName, z.ZoneName, 'Check-Out' AS ActionType, u.FullName AS StaffName
                              FROM Transactions tr 
                              JOIN Tickets tk ON tr.TicketID = tk.TicketID 
                              JOIN Users u ON tr.StaffID = u.UserID
                              JOIN Slots s ON tk.SlotID = s.SlotID
                              JOIN Zones z ON s.ZoneID = z.ZoneID
+                             JOIN VehicleTypes vt ON tk.TypeID = vt.TypeID
                          ) AS ActivityLog
                          ORDER BY ActivityTime DESC
                          """;
@@ -105,6 +107,7 @@ public class DashboardDAO extends DBContext {
                     log.activityTime = ts.toLocalDateTime();
                 }
                 log.licensePlate = rs.getString("LicensePlate");
+                log.vehicleType = rs.getString("VehicleType");
                 log.slot = rs.getString("SlotName");
                 log.zone = rs.getString("ZoneName");
                 log.actionType = rs.getString("ActionType");
