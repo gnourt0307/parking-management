@@ -157,33 +157,6 @@ public class ProfileController extends HttpServlet {
                 request.setAttribute("errorMsg", "Added new vehicle failed.");
             }
 
-        } else if ("editVehicle".equals(action)) {
-            int vehicleID = Integer.parseInt(request.getParameter("vehicleID"));
-            String typeName = request.getParameter("vehicleTypeName");
-            String licensePlate = request.getParameter("licensePlate");
-            int typeId = vehicleTypeDao.findTypeIdByName(typeName);
-
-            boolean success = customerVehicleDao.updateCustomerVehicle(vehicleID, user.getUserID(), licensePlate, typeId);
-
-            if (success) {
-                ArrayList<CustomerVehicle> customerVehicleList = customerVehicleDao.getCustomerVehicles(user);
-                request.setAttribute("successMsg", "Updated vehicle successfully.");
-                session.setAttribute("customerVehicleList", customerVehicleList);
-            } else {
-                request.setAttribute("errorMsg", "Failed to update vehicle.");
-            }
-        } else if ("deleteVehicle".equals(action)) {
-            int vehicleID = Integer.parseInt(request.getParameter("vehicleID"));
-
-            boolean success = customerVehicleDao.deleteCustomerVehicle(vehicleID, user.getUserID());
-
-            if (success) {
-                ArrayList<CustomerVehicle> customerVehicleList = customerVehicleDao.getCustomerVehicles(user);
-                request.setAttribute("successMsg", "Deleted vehicle successfully.");
-                session.setAttribute("customerVehicleList", customerVehicleList);
-            } else {
-                request.setAttribute("errorMsg", "Failed to delete vehicle.");
-            }
         }
         request.getRequestDispatcher("views/customer/profile.jsp").forward(request, response);
     }
