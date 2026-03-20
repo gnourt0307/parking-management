@@ -111,8 +111,12 @@
                                                 <td>${v.vehicleType.typeName}</td>
                                                 <td>${v.licensePlate}</td>
                                                 <td>
-                                                    <button class="btn btn-sFm" style="padding: 2px 16px" onclick="openEditModal()"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                    <button class="btn btn-danger btn-xs"><i class="fa-solid fa-trash-can"></i> Remove</button>
+                                                    <button class="btn btn-sFm" style="padding: 2px 16px" onclick="openEditVehicleModal(${v.vehicleID}, '${v.vehicleType.typeName}', '${v.licensePlate}')"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                    <form action="Profile" method="POST" style="display:inline;">
+                                                        <input type="hidden" name="action" value="deleteVehicle">
+                                                        <input type="hidden" name="vehicleID" value="${v.vehicleID}">
+                                                        <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this vehicle?');"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                                                    </form>
                                                 </td>
                                             </tr>       
                                         </c:forEach>
@@ -154,12 +158,12 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
                 <h3>Edit Your Vehicle</h3>
-                <form action="Pricing" method="POST">
-                    <input type="hidden" name="action" value="edit">
-                    <input type="hidden" name="pricing" id="editCustomerVehicle">
+                <form action="Profile" method="POST">
+                    <input type="hidden" name="action" value="editVehicle">
+                    <input type="hidden" name="vehicleID" id="editVehicleID">
                     <div class="form-group">
                         <label>Vehicle Type</label>
-                        <select name="vehicleTypeName">
+                        <select name="vehicleTypeName" id="editVehicleTypeName">
                             <c:forEach var="v" items="${sessionScope.vehicleList}">
                                 <option value="${v.typeName}">${v.typeName}</option>
                             </c:forEach>
@@ -167,15 +171,23 @@
                     </div>
                     <div class="form-group">
                         <label>License plate</label>
-                        <input type="number" name="licensePlate" id="licensePlate" required>
+                        <input type="text" name="licensePlate" id="editLicensePlate" required>
                     </div>
-                    <button type="submit" class="btn btn-success" style="width: 100%;">Update Zone</button>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">Update Vehicle</button>
                 </form>
             </div>
         </div>      
 
         <jsp:include page="../includes/footer.jsp" />
         <script src="static/js/admin_edit.js"></script>
+        <script>
+            function openEditVehicleModal(id, typeName, plate) {
+                document.getElementById('editVehicleID').value = id;
+                document.getElementById('editVehicleTypeName').value = typeName;
+                document.getElementById('editLicensePlate').value = plate;
+                document.getElementById('editModal').style.display = 'block';
+            }
+        </script>
     </body>
 
 </html>

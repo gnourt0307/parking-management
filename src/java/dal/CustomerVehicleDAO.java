@@ -74,4 +74,32 @@ public class CustomerVehicleDAO extends DBContext {
 
         return false;
     }
+
+    public boolean updateCustomerVehicle(int vehicleID, int userID, String licensePlate, int typeID) {
+        String strSQL = "UPDATE CustomerVehicles SET LicensePlate = ?, TypeID = ? WHERE VehicleID = ? AND UserID = ?";
+        try {
+            stm = connection.prepareStatement(strSQL);
+            stm.setString(1, licensePlate);
+            stm.setInt(2, typeID);
+            stm.setInt(3, vehicleID);
+            stm.setInt(4, userID);
+            return stm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteCustomerVehicle(int vehicleID, int userID) {
+        String strSQL = "DELETE FROM CustomerVehicles WHERE VehicleID = ? AND UserID = ?";
+        try {
+            stm = connection.prepareStatement(strSQL);
+            stm.setInt(1, vehicleID);
+            stm.setInt(2, userID);
+            return stm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
