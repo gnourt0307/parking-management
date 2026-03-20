@@ -85,7 +85,25 @@ public class DashboardController extends HttpServlet {
         request.setAttribute("availableSlots", availableSlots);
         BigDecimal todaysRevenue = dDAO.getTodaysRevenue();
         request.setAttribute("todaysRevenue", todaysRevenue);
-        List<ActivityLog> recentActivities = dDAO.getRecentActivities();
+
+        String staffFilter = request.getParameter("staffFilter");
+        String actionFilter = request.getParameter("actionFilter");
+        String dateFrom = request.getParameter("dateFrom");
+        String dateTo = request.getParameter("dateTo");
+
+        dal.UserDAO userDAO = new dal.UserDAO();
+        List<User> allUsers = userDAO.getListUsers();
+        List<User> staffList = new java.util.ArrayList<>();
+        if (allUsers != null) {
+            for (User u : allUsers) {
+                if (u.getRoleID() == 2) {
+                    staffList.add(u);
+                }
+            }
+        }
+        request.setAttribute("staffList", staffList);
+
+        List<ActivityLog> recentActivities = dDAO.getRecentActivities(staffFilter, actionFilter, dateFrom, dateTo);
         request.setAttribute("recentActivities", recentActivities);
         rd = request.getRequestDispatcher("views/admin/dashboard.jsp");
         rd.forward(request, response);

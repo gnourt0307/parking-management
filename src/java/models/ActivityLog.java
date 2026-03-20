@@ -19,6 +19,7 @@ public class ActivityLog {
     public String vehicleType;
     public String actionType; // "Check-In" hoặc "Check-Out"
     public String staffName;
+    public java.math.BigDecimal amount;
 
     public ActivityLog() {
     }
@@ -57,5 +58,16 @@ public class ActivityLog {
             return activityTime.format(formatter);
         }
         return "";
+    }
+
+    public java.math.BigDecimal getAmount() {
+        return amount;
+    }
+
+    public String getFormattedAmount() {
+        if (amount != null && amount.compareTo(java.math.BigDecimal.ZERO) > 0) {
+            return utils.FormatCurrency.formatVND(amount);
+        }
+        return "0 ₫";
     }
 }
