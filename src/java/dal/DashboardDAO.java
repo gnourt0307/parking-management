@@ -76,7 +76,7 @@ public class DashboardDAO extends DBContext {
         try {
             // Lấy 10 hoạt động mới nhất bằng cách gộp Tickets và Transactions
             String sql = """
-                         SELECT TOP 10 * FROM (
+                         SELECT TOP 15 * FROM (
                              SELECT t.EntryTime AS ActivityTime, t.LicensePlate, 'Check-In' AS ActionType, u.FullName AS StaffName
                              FROM Tickets t JOIN Users u ON t.CreatedBy = u.UserID
                              
