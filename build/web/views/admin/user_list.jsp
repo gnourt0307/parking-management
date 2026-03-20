@@ -119,8 +119,8 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select name="status" required>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success" style="width: 100%;">Save User</button>
