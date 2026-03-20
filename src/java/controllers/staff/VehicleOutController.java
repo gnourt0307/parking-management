@@ -179,11 +179,7 @@ public class VehicleOutController extends HttpServlet {
                 slotDAO.setSlotStatus(ticket.getSlotID(), "AVAILABLE");
 
                 if (statusUpdated && transCreated) {
-<<<<<<< HEAD
                     session.setAttribute("successMsg", "Payment completed successfully.");
-=======
-                    session.setAttribute("successMsg", "Payment successful.");
->>>>>>> e1ee9f1578373468a1bfcf593fd12e447677f62d
                 } else {
                     session.setAttribute("errorMsg", "Payment failed.");
                 }
@@ -225,25 +221,15 @@ public class VehicleOutController extends HttpServlet {
                 slotDAO.setSlotStatus(ticket.getSlotID(), "AVAILABLE");
 
                 if (statusUpdated && transCreated) {
-<<<<<<< HEAD
                     session.setAttribute("successMsg", "Lost ticket processed successfully.");
                 } else {
                     session.setAttribute("errorMsg", "Failed to process lost ticket.");
-=======
-                    session.setAttribute("successMsg", "Lost ticket processing successful.");
-                } else {
-                    session.setAttribute("errorMsg", "Lost ticket processing failed.");
->>>>>>> e1ee9f1578373468a1bfcf593fd12e447677f62d
                 }
                 response.sendRedirect("VehicleOut");
                 return;
             }
         } catch (Exception e) {
-<<<<<<< HEAD
             session.setAttribute("errorMsg", "Invalid data provided.");
-=======
-            session.setAttribute("errorMsg", "Invalid data.");
->>>>>>> e1ee9f1578373468a1bfcf593fd12e447677f62d
         }
 
         response.sendRedirect("VehicleOut");
