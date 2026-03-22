@@ -81,7 +81,7 @@ public class DashboardDAO extends DBContext {
         try {
             StringBuilder sql = new StringBuilder(
                     """
-                            SELECT TOP 1000 * FROM (
+                            SELECT TOP 20 * FROM (
                                 SELECT t.EntryTime AS ActivityTime, t.LicensePlate, vt.TypeName AS VehicleType, s.SlotName, z.ZoneName, 'Check-In' AS ActionType, u.FullName AS StaffName, u.UserID AS StaffID, CAST(0 AS DECIMAL(18,2)) AS Amount
                                 FROM Tickets t
                                 JOIN Users u ON t.CreatedBy = u.UserID
