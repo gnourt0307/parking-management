@@ -22,7 +22,7 @@ public class TransactionDAO extends DBContext {
     ResultSet rs;
 
     /**
-     * Tạo hóa đơn cho vé khi xe xuất bãi.
+     * Tao hoa don cho ve khi xe xuat bai.
      */
     public boolean createTransaction(int ticketID, BigDecimal totalAmount, int staffID) {
         String sql = """
@@ -43,7 +43,7 @@ public class TransactionDAO extends DBContext {
     }
 
     /**
-     * Lịch sử các giao dịch (check-out) do 1 staff thực hiện.
+     * Lich su cac giao dich (check-out) do 1 staff thuc hien.
      */
     public List<Transaction> getTransactionsByStaff(int staffID) {
         List<Transaction> list = new ArrayList<>();

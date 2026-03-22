@@ -23,7 +23,7 @@ public class DashboardDAO extends DBContext {
     public int getTotalCapacity() {
         int total = 0;
         try {
-            // �?ếm tổng số lượng ID trong bảng Slots
+            // �?em tong so luong ID trong bang Slots
             String sql = "SELECT COUNT(SlotID) as Total FROM Slots";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -41,8 +41,8 @@ public class DashboardDAO extends DBContext {
     public int getOccupiedSlotsCount() {
         int count = 0;
         try {
-            // �?ếm các slot có trạng thái là Occupied (dùng UPPER để không phân biệt hoa
-            // thư�?ng)
+            // �?em cac slot co trang thai la Occupied (dung UPPER de khong phan biet hoa
+            // thu�?ng)
             String sql = "SELECT COUNT(SlotID) as OccupiedCount FROM Slots WHERE UPPER(Status) = 'OCCUPIED'";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -60,7 +60,7 @@ public class DashboardDAO extends DBContext {
     public int getAvailableSlotsCount() {
         int count = 0;
         try {
-            // �?ếm các slot có trạng thái chính xác là Available
+            // �?em cac slot co trang thai chinh xac la Available
             String sql = "SELECT COUNT(SlotID) as AvailableCount FROM Slots WHERE UPPER(Status) = 'AVAILABLE'";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -155,7 +155,7 @@ public class DashboardDAO extends DBContext {
     public BigDecimal getTodaysRevenue() {
         BigDecimal revenue = null;
         try {
-            // Lấy tổng ti�?n của các giao dịch có ExitTime trong ngày hôm nay
+            // Lay tong ti�?n cua cac giao dich co ExitTime trong ngay hom nay
             String sql = """
                     SELECT SUM(TotalAmount) AS Revenue
                     FROM Transactions

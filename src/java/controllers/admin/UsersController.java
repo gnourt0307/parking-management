@@ -66,36 +66,36 @@ public class UsersController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         RequestDispatcher rd;
 
-        // 1. Kiểm tra đăng nhập và quyền
+        // 1. Kiem tra dang nhap va quyen
         if (user == null) {
             rd = request.getRequestDispatcher("views/auth/login.jsp");
             rd.forward(request, response);
-            return; // Phải có return ở đây để code dừng lại, không chạy tiếp xuống dưới
+            return; // Phai co return o day de code dung lai, khong chay tiep xuong duoi
         } else if (user.getRoleID() != 1) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 
-        // 2. Xử lý tìm kiếm
+        // 2. Xu ly tim kiem
         UserDAO uDAO = new UserDAO();
-        String searchKeyword = request.getParameter("searchKeyword"); // Lấy từ khóa từ giao diện
+        String searchKeyword = request.getParameter("searchKeyword"); // Lay tu khoa tu giao dien
         List<User> users;
 
-        // Nếu người dùng có nhập từ khóa tìm kiếm
+        // Neu nguoi dung co nhap tu khoa tim kiem
         if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
             users = uDAO.getListUsersBySearch(searchKeyword.trim());
         } else {
-            // Nếu không nhập gì thì lấy toàn bộ
+            // Neu khong nhap gi thi lay toan bo
             users = uDAO.getListUsers();
         }
 
         RoleDAO rDAO = new RoleDAO();
         List<Role> roles = rDAO.getAllRoles();
 
-        // 3. Đẩy dữ liệu sang JSP
+        // 3. Day du lieu sang JSP
         request.setAttribute("users", users);
         request.setAttribute("roles", roles);
-        request.setAttribute("searchKeyword", searchKeyword); // Gửi lại từ khóa để giữ chữ trên ô input
+        request.setAttribute("searchKeyword", searchKeyword); // Gui lai tu khoa de giu chu tren o input
 
         rd = request.getRequestDispatcher("views/admin/user_list.jsp");
         rd.forward(request, response);
@@ -128,13 +128,13 @@ public class UsersController extends HttpServlet {
         try {
             if (action.equals("add")) {
 
-                // 1. Lấy dữ liệu từ form JSP gửi lên
+                // 1. Lay du lieu tu form JSP gui len
                 String fullName = request.getParameter("fullName");
-                String username = request.getParameter("username"); // name trên form là userName
+                String username = request.getParameter("username"); // name tren form la userName
                 String password = request.getParameter("password");
-                String phone = request.getParameter("phone"); // Lấy phone (nếu bạn thêm vào form)
+                String phone = request.getParameter("phone"); // Lay phone (neu ban them vao form)
 
-                // Nếu form chưa có phone thì cho tạm chuỗi rỗng để không bị lỗi null
+                // Neu form chua co phone thi cho tam chuoi rong de khong bi loi null
                 if (phone == null) {
                     phone = "";
                 }
@@ -142,7 +142,7 @@ public class UsersController extends HttpServlet {
                 int roleID = Integer.parseInt(request.getParameter("role"));
                 String status = request.getParameter("status");
 
-                // 2. Đóng gói vào object User
+                // 2. Dong goi vao object User
                 User newUser = new User();
                 newUser.setFullName(fullName);
                 newUser.setUsername(username);
@@ -151,11 +151,11 @@ public class UsersController extends HttpServlet {
                 newUser.setRoleID(roleID);     // Set RoleID
                 newUser.setStatus(status);     // Set Status
 
-                // 3. Gọi hàm insertUser có sẵn
+                // 3. Goi ham insertUser co san
                 UserDAO uDAO = new UserDAO();
                 boolean success = uDAO.insertUser(newUser);
 
-                // 4. Báo kết quả
+                // 4. Bao ket qua
                 if (success) {
                     session.setAttribute("successMsg", "Thêm User thành công!");
                 } else {
@@ -164,7 +164,7 @@ public class UsersController extends HttpServlet {
                 response.sendRedirect("Users");
                 return;
             } else if (action.equals("edit")) {
-                // 1. Lấy dữ liệu từ form Edit JSP gửi lên
+                // 1. Lay du lieu tu form Edit JSP gui len
                 int userID = Integer.parseInt(request.getParameter("userID"));
                 String fullName = request.getParameter("fullName");
                 String username = request.getParameter("username");
@@ -172,7 +172,7 @@ public class UsersController extends HttpServlet {
                 int roleID = Integer.parseInt(request.getParameter("role"));
                 String status = request.getParameter("status");
 
-                // 2. Đóng gói vào object User
+                // 2. Dong goi vao object User
                 User updateUser = new User();
                 updateUser.setUserID(userID);
                 updateUser.setFullName(fullName);
@@ -181,18 +181,18 @@ public class UsersController extends HttpServlet {
                 updateUser.setRoleID(roleID);
                 updateUser.setStatus(status);
 
-                // 3. Gọi hàm DAO để update xuống DB
+                // 3. Goi ham DAO de update xuong DB
                 UserDAO uDAO = new UserDAO();
                 boolean success = uDAO.updateUser(updateUser);
 
-                // 4. Báo kết quả và điều hướng
+                // 4. Bao ket qua va dieu huong
                 if (success) {
                     session.setAttribute("successMsg", "Cập nhật User thành công!");
                 } else {
                     session.setAttribute("errorMsg", "Cập nhật thất bại. Vui lòng thử lại!");
                 }
                 response.sendRedirect("Users");
-                return; // Thêm return để kết thúc nhánh này
+                return; // Them return de ket thuc nhanh nay
             } else if (action.equals("delete")) {
                 int userID = Integer.parseInt(request.getParameter("userID"));
                 User deleteUser = new User();

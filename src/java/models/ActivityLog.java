@@ -17,7 +17,7 @@ public class ActivityLog {
     public String slot;
     public String zone;
     public String vehicleType;
-    public String actionType; // "Check-In" hoặc "Check-Out"
+    public String actionType; // "Check-In" hoac "Check-Out"
     public String staffName;
     public java.math.BigDecimal amount;
 

@@ -60,7 +60,7 @@ public class UserDAO extends DBContext {
     public List<User> getListUsersBySearch(String searchKeyword) {
         List<User> users = new ArrayList<>();
         try {
-            // Dùng LIKE để tìm kiếm chuỗi chứa từ khóa
+            // Dung LIKE de tim kiem chuoi chua tu khoa
             String strSQL = """
                             SELECT U.*, R.RoleName
                             FROM Users U JOIN Roles R ON U.RoleID = R.RoleID
@@ -68,7 +68,7 @@ public class UserDAO extends DBContext {
                             """;
 
             stm = connection.prepareStatement(strSQL);
-            stm.setString(1, "%" + searchKeyword + "%"); // Truy�?n từ khóa vào
+            stm.setString(1, "%" + searchKeyword + "%"); // Truy�?n tu khoa vao
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -162,8 +162,8 @@ public class UserDAO extends DBContext {
             stm.setString(2, user.getPassword());
             stm.setString(3, user.getFullName());
             stm.setString(4, user.getPhone());
-            stm.setInt(5, user.getRoleID()); // Lấy RoleID động
-            stm.setString(6, user.getStatus()); // Lấy Status động
+            stm.setInt(5, user.getRoleID()); // Lay RoleID dong
+            stm.setString(6, user.getStatus()); // Lay Status dong
             return stm.executeUpdate() > 0;
 
         } catch (Exception e) {

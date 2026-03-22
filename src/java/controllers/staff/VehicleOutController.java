@@ -98,7 +98,7 @@ public class VehicleOutController extends HttpServlet {
                 Ticket ticket = ticketDAO.findActiveTicketByPlate(plateSearch);
 
                 if (ticket != null) {
-                    // Tính tiền tạm thời theo số giờ, làm tròn lên 1 giờ
+                    // Tinh tien tam thoi theo so gio, lam tron len 1 gio
                     LocalDateTime now = LocalDateTime.now();
                     Duration duration = Duration.between(ticket.getEntryTime(), now);
                     long minutes = duration.toMinutes();
@@ -120,7 +120,7 @@ public class VehicleOutController extends HttpServlet {
                     request.setAttribute("baseAmount", FormatCurrency.formatVND(totalAmount));
                     request.setAttribute("lostFee", FormatCurrency.formatVND(LOST_TICKET_FEE));
                     request.setAttribute("totalWithLost", FormatCurrency.formatVND(totalAmount.add(LOST_TICKET_FEE)));
-                    request.setAttribute("totalAmount", FormatCurrency.formatVND(totalAmount)); // giữ tương thích chỗ khác nếu có
+                    request.setAttribute("totalAmount", FormatCurrency.formatVND(totalAmount)); // giu tuong thich cho khac neu co
                     if (ticket.getEntryTime() != null) {
                         String formatted = ticket.getEntryTime().format(ENTRY_TIME_FORMATTER);
                         request.setAttribute("entryTimeFormatted", formatted);
@@ -164,12 +164,12 @@ public class VehicleOutController extends HttpServlet {
                     totalAmount = totalAmount.add(LOST_TICKET_FEE);
                 }
 
-                // Cập nhật trạng thái vé và tạo transaction
+                // Cap nhat trang thai ve va tao transaction
                 boolean statusUpdated = ticketDAO.updateTicketStatus(ticketID, "Completed");
                 TransactionDAO transDAO = new TransactionDAO();
                 boolean transCreated = transDAO.createTransaction(ticketID, totalAmount, user.getUserID());
 
-                // Mở lại slot cho xe khác
+                // Mo lai slot cho xe khac
                 SlotDAO slotDAO = new SlotDAO();
                 slotDAO.setSlotStatus(ticket.getSlotID(), "Available");
 
@@ -189,7 +189,7 @@ public class VehicleOutController extends HttpServlet {
                     return;
                 }
 
-                // Tính tiền gửi xe hiện tại + phụ phí mất vé
+                // Tinh tien gui xe hien tai + phu phi mat ve
                 LocalDateTime now = LocalDateTime.now();
                 Duration duration = Duration.between(ticket.getEntryTime(), now);
                 long minutes = duration.toMinutes();

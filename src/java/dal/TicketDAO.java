@@ -121,7 +121,7 @@ public class TicketDAO extends DBContext {
     }
 
     /**
-     * Tìm vé đang ACTIVE theo biển số.
+     * Tim ve dang ACTIVE theo bien so.
      */
     public Ticket findActiveTicketByPlate(String licensePlate) {
         String sql = """
@@ -184,8 +184,8 @@ public class TicketDAO extends DBContext {
     }
 
     /**
-     * Tạo vé mới khi xe vào bãi.
-     * Lấy HourlyRate/DailyRate tại th�?i điểm tạo từ bảng Pricing.
+     * Tao ve moi khi xe vao bai.
+     * Lay HourlyRate/DailyRate tai th�?i diem tao tu bang Pricing.
      */
     public boolean createTicket(Ticket t) {
         String sql = """
@@ -224,7 +224,7 @@ public class TicketDAO extends DBContext {
     }
 
     /**
-     * Lấy chi tiết vé theo ID.
+     * Lay chi tiet ve theo ID.
      */
     public Ticket getTicketById(int ticketID) {
         String sql = """
@@ -274,7 +274,7 @@ public class TicketDAO extends DBContext {
     }
 
     /**
-     * Cập nhật trạng thái vé.
+     * Cap nhat trang thai ve.
      */
     public boolean updateTicketStatus(int ticketID, String status) {
         String sql = "UPDATE Tickets SET Status = ? WHERE TicketID = ?";
@@ -291,7 +291,7 @@ public class TicketDAO extends DBContext {
     }
 
     /**
-     * Tạo TicketCode theo format: VEX-yyMMdd-0001 (tăng dần theo ngày).
+     * Tao TicketCode theo format: VEX-yyMMdd-0001 (tang dan theo ngay).
      */
     public String generateNextTicketCode() {
         String sql = """
@@ -321,14 +321,14 @@ public class TicketDAO extends DBContext {
             System.out.println("Error in generateNextTicketCode: " + e.getMessage());
         
         }
-        // Fallback nếu có lỗi DB
+        // Fallback neu co loi DB
         String datePart = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyMMdd"));
         return "VEX-" + datePart + "-" + String.format("%04d", (int) (System.currentTimeMillis() % 10000));
     }
 
     /**
-     * Lịch sử gộp check-in / check-out của một staff,
-     * có l�?c theo mã vé hoặc biển số (tùy ch�?n).
+     * Lich su gop check-in / check-out cua mot staff,
+     * co l�?c theo ma ve hoac bien so (tuy ch�?n).
      */
     public List<StaffTicketHistory> getStaffHistory(int staffID, String searchKeyword) {
         List<StaffTicketHistory> list = new ArrayList<>();

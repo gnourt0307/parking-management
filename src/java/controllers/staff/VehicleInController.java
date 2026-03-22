@@ -70,7 +70,7 @@ public class VehicleInController extends HttpServlet {
             return;
         }
 
-        // Lấy danh sách slot để staff chọn khi check-in
+        // Lay danh sach slot de staff chon khi check-in
         SlotDAO slotDAO = new SlotDAO();
         List<Slot> slots = slotDAO.getAllSlots(null, null);
         request.setAttribute("slots", slots);
@@ -132,18 +132,18 @@ public class VehicleInController extends HttpServlet {
 
                 Ticket ticket = new Ticket();
 
-                // Tạo mã vé theo format VEX-yyMMdd-0001
+                // Tao ma ve theo format VEX-yyMMdd-0001
                 ticket.setTicketCode(ticketDAO.generateNextTicketCode());
                 ticket.setLicensePlate(licensePlate);
                 ticket.setTypeID(typeID);
                 ticket.setSlotID(slotID);
-                ticket.setCustomerID(registeredVehicle != null ? registeredVehicle.getUserID() : null); // nếu có đky thì map vào UserID, ko thì null
+                ticket.setCustomerID(registeredVehicle != null ? registeredVehicle.getUserID() : null); // neu co dky thi map vao UserID, ko thi null
                 ticket.setCreatedBy(user.getUserID());
 
                 boolean created = ticketDAO.createTicket(ticket);
 
                 if (created) {
-                    // Đánh dấu slot đang được sử dụng
+                    // Danh dau slot dang duoc su dung
                     SlotDAO slotDAO = new SlotDAO();
                     slotDAO.setSlotStatus(slotID, "Occupied");
                     session.setAttribute("successMsg", "Check-in successful.");

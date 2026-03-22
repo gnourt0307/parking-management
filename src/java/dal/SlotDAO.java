@@ -165,7 +165,7 @@ public class SlotDAO extends DBContext {
     }
 
     /**
-     * Cập nhật trạng thái của Slot (AVAILABLE, OCCUPIED, MAINTENANCE).
+     * Cap nhat trang thai cua Slot (AVAILABLE, OCCUPIED, MAINTENANCE).
      */
     public boolean setSlotStatus(int slotID, String status) {
         String sql = "UPDATE Slots SET Status = ? WHERE SlotID = ?";
