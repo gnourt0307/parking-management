@@ -34,10 +34,6 @@ public class RoleDAO extends DBContext {
         } catch (Exception ex) {
             System.out.println("getAllRoles Error: " + ex.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return roles;
     }

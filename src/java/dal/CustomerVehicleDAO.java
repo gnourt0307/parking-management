@@ -53,10 +53,6 @@ public class CustomerVehicleDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return customerVehicleList;
@@ -85,10 +81,6 @@ public class CustomerVehicleDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return null;
@@ -108,10 +100,6 @@ public class CustomerVehicleDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return false;
@@ -129,10 +117,6 @@ public class CustomerVehicleDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -147,10 +131,6 @@ public class CustomerVehicleDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }

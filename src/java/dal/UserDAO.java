@@ -53,10 +53,6 @@ public class UserDAO extends DBContext {
         } catch (Exception ex) {
             System.out.println("GetAccounts:" + ex.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return users;
     }
@@ -96,10 +92,6 @@ public class UserDAO extends DBContext {
         } catch (Exception ex) {
             System.out.println("getListUsersBySearch Error: " + ex.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return users;
     }
@@ -122,10 +114,6 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("updateUser Error: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -159,10 +147,6 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return user;
@@ -185,10 +169,6 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return false;
@@ -205,10 +185,6 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -230,10 +206,6 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return false;
@@ -254,10 +226,6 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return false;
@@ -276,10 +244,6 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return false;

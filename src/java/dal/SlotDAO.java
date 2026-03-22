@@ -67,10 +67,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in getAllSlots: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return slots;
     }
@@ -86,10 +82,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in checkSlotExist: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -106,10 +98,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in checkSlotExistForUpdate: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -126,10 +114,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in addSlot: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -147,10 +131,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in updateSlot: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -180,10 +160,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in deleteSlot: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -201,10 +177,6 @@ public class SlotDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in setSlotStatus: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }

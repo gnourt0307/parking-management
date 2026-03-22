@@ -34,10 +34,6 @@ public class DashboardDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("getTotalCapacity Error: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return total;
     }
@@ -57,10 +53,6 @@ public class DashboardDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("getOccupiedSlotsCount Error: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return count;
     }
@@ -79,10 +71,6 @@ public class DashboardDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("getAvailableSlotsCount Error: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return count;
     }
@@ -160,10 +148,6 @@ public class DashboardDAO extends DBContext {
             System.out.println("getRecentActivities Error: " + e.getMessage());
             e.printStackTrace();
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return list;
     }
@@ -187,10 +171,6 @@ public class DashboardDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("getTodaysRevenue Error: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return revenue;
     }

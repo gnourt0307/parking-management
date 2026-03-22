@@ -38,10 +38,6 @@ public class TransactionDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in createTransaction: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -80,10 +76,6 @@ public class TransactionDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in getTransactionsByStaff: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return list;
     }

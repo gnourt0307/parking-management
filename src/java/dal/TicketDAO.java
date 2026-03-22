@@ -63,10 +63,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in getActiveTicketsMap: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return map;
     }
@@ -120,10 +116,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in getActiveTicketsList: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return list;
     }
@@ -187,10 +179,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in findActiveTicketByPlate: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return null;
     }
@@ -231,10 +219,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in createTicket: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -285,10 +269,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in getTicketById: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return null;
     }
@@ -306,10 +286,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in updateTicketStatus: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -336,10 +312,6 @@ public class TicketDAO extends DBContext {
                     } catch (NumberFormatException ignored) {
                         nextSeq = 1;
                     
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
                 }
             }
@@ -348,10 +320,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in generateNextTicketCode: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         // Fallback nếu có lỗi DB
         String datePart = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyMMdd"));
@@ -448,10 +416,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in getStaffHistory: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         return list;
@@ -515,10 +479,6 @@ public class TicketDAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error in getTicketHistoryByCustomerID: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return list;
     }

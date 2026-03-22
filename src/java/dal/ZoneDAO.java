@@ -39,10 +39,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in getAllZones: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return zones;
     }
@@ -74,10 +70,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in getZonesByName: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return zones;
     }
@@ -110,10 +102,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in getZonesByFilters: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
 
         // Filter by Vehicle Type in Java since it is a derived field
@@ -137,10 +125,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error loading zone capacity: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
     }
 
@@ -156,10 +140,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in checkZoneExist: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -177,10 +157,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in checkZoneExistForUpdate: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -203,10 +179,6 @@ public class ZoneDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("Error in addZone: " + e.getMessage());
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
         return -1;
     }
@@ -225,10 +197,6 @@ public class ZoneDAO extends DBContext {
             System.out.println("Error in editZone: " + e.getMessage());
             return false;
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
     }
 
@@ -270,10 +238,6 @@ public class ZoneDAO extends DBContext {
             System.out.println("Error in deleteZone: " + e.getMessage());
             return "Internal error occurred during zone deletion.";
         
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (stm != null) stm.close(); } catch (Exception e) {}
-            try { if (connection != null) connection.close(); } catch (Exception e) {}
         }
     }
 }
